@@ -1,6 +1,7 @@
 <!DOCTYPE html><html>
   <link rel="icon" href="favicon.png" type="image/png">
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <style>
     canvas {left: 0; position: absolute; top: 0;}
   </style>
@@ -17,7 +18,12 @@ var g =
 
   set b (b)
   {
+    var x = g.c.x (b.x);
+    var y = g.c.y (b.y);
+    var w = g.c.x (b.w);
+    var h = g.c.y (b.h);
     var b = b;
+        b.actived = false;
         b.id = (b.id) ? b.id : g.buttons.length;
         b.showed = false;
 
@@ -25,27 +31,51 @@ var g =
         {
           if (g.e.type == 'click')
           {
-            if ((g.e.x >= b.x) && (g.e.x <= b.x + b.w))
+            if ((g.e.x >= x) && (g.e.x <= x + w) && (g.e.y >= y) && (g.e.y <= y + h))
             {
-              if ((g.e.y >= b.y) && (g.e.y <= b.y + b.h))
-              {
-                b.a ();
-              }
-            }
+              b.a ();
+            };
           };
         };
 
-        b.hide = function ()
+        b.active = function ()
         {
-          var id = b.i.constructor.name;
-          g.scene.splice (id);
+          if (g.e.type == 'mousemove')
+          {
+            if ((g.e.x >= x) && (g.e.x <= x + w) && (g.e.y >= y) && (g.e.y <= y + h))
+            {
+              if (!b.actived)
+              {
+                b.hide (b.i0.name);
+                b.show (b.i1);
+                b.actived = true;
+              };
+            }
+            else
+            {
+              if (b.actived)
+              {
+                b.hide (b.i1.name);
+                b.show (b.i0);
+                b.actived = false;
+              };
+            };
+          };
         };
 
-        b.show = function ()
+        b.hide = function (id)
+        {
+            b.showed = false;
+            g.log = g.scene;
+            delete g.scene[id];
+            g.log = g.scene;
+        };
+
+        b.show = function (i)
         {
           if (!b.showed)
           {
-            g.d = { x: b.x, y: b.y, h: b.h, w: b.w, i: b.i };
+            g.d = { x: b.x, y: b.y, h: b.h, w: b.w, i: i, id: i.name };
             b.showed = true;
           };
         };
@@ -53,9 +83,10 @@ var g =
         b.update = function ()
         {
           b.action ();
+          b.active ();
         };
 
-    b.show ();
+    b.show (b.i0);
     g.buttons[b.id] = b;
   },
 
@@ -185,6 +216,7 @@ var g =
       for (var id in list)
       {
         var i = new Image ();
+            i.name = id;
             i.src = list[id];
         g.i[id] = i;
       };
@@ -263,19 +295,20 @@ g.run ();
 
 g.i.l =
 {
-  logo: 'logo.svg'
+  logo: 'logo.svg',
+  logo1: 'logo1.svg'
 };
 
-g.d = { x: 100, y: 110, h: 40, w: 100 };
+//g.d = { x: 100, y: 110, h: 40, w: 100 };
 
-g.d = { x: 300, y: 110, r: 50, f: true };
+//g.d = { x: 300, y: 110, r: 50, f: true };
 
-g.d = { x: 100, y: 110, t: 'text', f: true, s: '100px' };
+//g.d = { x: 100, y: 110, t: 'text', f: true, s: '100px' };
 
-g.d = { i: g.i.logo, x: (g.c.width/2 - 59/2) / g.c.width, y: (g.c.height/2 - 72/2) / g.c.height};
+//g.d = { i: g.i.logo, x: (g.c.width/2 - 59/2) / g.c.width, y: (g.c.height/2 - 72/2) / g.c.height};
 
 g.b =
-{ x: 200, y: 200, h: 72, w: 59, i: g.i.logo, id: 'logo',
+{ x: (g.c.width/2 - 59/2) / g.c.width, y: (g.c.height/2 - 72/2) / g.c.height, h: 72, w: 59, i0: g.i.logo, i1: g.i.logo1, id: 'logo',
   a: function ()
   {
     g.log = 'click';
