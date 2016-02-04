@@ -29,6 +29,21 @@ var g =
               break;
           }
         };
+        c.x = function (x)
+        {
+          var x = (x <= 1) ? x * g.c.width : x;
+          return x;
+        };
+        c.xymin = function (xy)
+        {
+          var xy = (xy <= 1) ? xy * Math.min (g.c.height, g.c.width) : xy;
+          return xy;
+        };
+        c.y = function (y)
+        {
+          var y = (y <= 1) ? y * g.c.height : y;
+          return y;
+        };
 
         delete g['c'];
 
@@ -59,7 +74,50 @@ var g =
 
   draw: function ()
   {
+    g.c.c.clearRect (0, 0, g.c.width, g.c.height);
 
+    for (var id in g.scene)
+    {
+      var c = g.scene[id];
+
+      var a = g.c.x (c.a);
+      var b = g.c.y (c.b);
+
+      var x = g.c.x (c.x);
+      var y = g.c.y (c.y);
+
+      var w = g.c.x (c.w);
+      var h = g.c.y (c.h);
+
+      var r = g.c.xymin (c.r);
+
+      g.c.c.beginPath ();
+
+      switch (c.type)
+      {
+        case 'box':
+          var _ = (c.f) ? g.c.c.fillRect (x, y, w, h) : g.c.c.strokeRect (x, y, w, h);
+          break;
+
+        case 'image':
+          var _ = (c.h) ? g.c.c.drawImage (i, x, y, w, h) : g.c.c.drawImage (i, x, y);
+          break;
+
+        case 'line':
+          g.c.c.moveTo (a, b);
+          g.c.c.lineTo (x, y);
+          break;
+
+        case 'ring':
+          g.c.c.arc (x, y, r, 0, 2 * Math.PI);
+          var _ = (c.f) ? g.c.c.fill () : g.c.c.stroke ();
+          break;
+
+        case 'text':
+          var _ = (c.f) ? g.c.c.fillText (c.t, x, y) : g.c.c.strokeText (c.t, x, y) ;
+          break;
+      }
+    };
   },
 
   e: {},
@@ -131,5 +189,7 @@ var g =
 
 g.load ();
 g.run ();
+
+g.d = { x: 100, y: 110, h: 40, w: 100 };
 
 </script></body></html>
