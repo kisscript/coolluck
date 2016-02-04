@@ -14,6 +14,15 @@ var d = w.document;
 
 var g =
 {
+
+  set b (b)
+  {
+    var b = b;
+        b.id = (b.id) ? b.id : g.buttons.length;
+  },
+
+  buttons: [],
+
   c: function ()
   {
     var c = w.d.createElement ('canvas');
@@ -116,7 +125,7 @@ var g =
           break;
 
         case 'text':
-          g.c.c.font = (c.s) ? c.s + ' ' + g.s.font.family : g.s.font.size + g.s.font.family;
+          g.c.c.font = (c.s) ? c.s + ' ' + g.s.font.family : g.s.font.size + ' ' + g.s.font.family;
           var _ = (c.f) ? g.c.c.fillText (c.t, x, y) : g.c.c.strokeText (c.t, x, y) ;
           break;
       }
@@ -219,8 +228,10 @@ g.d = { x: 100, y: 110, h: 40, w: 100 };
 
 g.d = { x: 300, y: 110, r: 50, f: true };
 
-g.d = { x: 100, y: 110, t: 'text', f: true };
+g.d = { x: 100, y: 110, t: 'text', f: true, s: '100px' };
 
-g.d = { i: g.i.logo, x: (g.c.width/2 - 100) / g.c.width, y: (g.c.height/2 - 100) / g.c.height, h: 200, w: 200 };
+g.log = g.i.logo.height;
+
+g.d = { i: g.i.logo, x: (g.c.width/2 - 59/2) / g.c.width, y: (g.c.height/2 - 72/2) / g.c.height};
 
 </script></body></html>
