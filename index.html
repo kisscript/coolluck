@@ -46,6 +46,7 @@ var g =
             {
               if (!b.actived)
               {
+                g.c.style.cursor = 'pointer';
                 b.hide (b.i0.name);
                 b.show (b.i1);
                 b.actived = true;
@@ -55,6 +56,7 @@ var g =
             {
               if (b.actived)
               {
+                g.c.style.cursor = 'default';
                 b.hide (b.i1.name);
                 b.show (b.i0);
                 b.actived = false;
