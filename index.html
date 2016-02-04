@@ -102,7 +102,7 @@ var g =
           break;
 
         case 'image':
-          var _ = (c.h) ? g.c.c.drawImage (i, x, y, w, h) : g.c.c.drawImage (i, x, y);
+          var _ = (c.h) ? g.c.c.drawImage (c.i, x, y, w, h) : g.c.c.drawImage (c.i, x, y);
           break;
 
         case 'line':
@@ -116,6 +116,7 @@ var g =
           break;
 
         case 'text':
+          g.c.c.font = (c.s) ? c.s + ' ' + g.s.font.family : g.s.font.size + g.s.font.family;
           var _ = (c.f) ? g.c.c.fillText (c.t, x, y) : g.c.c.strokeText (c.t, x, y) ;
           break;
       }
@@ -128,6 +129,19 @@ var g =
   {
     g.e = event;
     g.run ();
+  },
+
+  i:
+  {
+    set l (list)
+    {
+      for (var id in list)
+      {
+        var i = new Image ();
+            i.src = list[id];
+        g.i[id] = i;
+      };
+    }
   },
 
   load: function ()
@@ -176,7 +190,11 @@ var g =
 
   s:
   {
-    font: '1em Arial',
+    font:
+    {
+      family: 'Arial',
+      size: '1em'
+    },
     tick: 1000,
     time: 0
   },
@@ -192,6 +210,17 @@ var g =
 g.load ();
 g.run ();
 
+g.i.l =
+{
+  logo: 'logo.svg'
+};
+
 g.d = { x: 100, y: 110, h: 40, w: 100 };
+
+g.d = { x: 300, y: 110, r: 50, f: true };
+
+g.d = { x: 100, y: 110, t: 'text', f: true };
+
+g.d = { i: g.i.logo, x: (g.c.width/2 - 100) / g.c.width, y: (g.c.height/2 - 100) / g.c.height, h: 200, w: 200 };
 
 </script></body></html>
