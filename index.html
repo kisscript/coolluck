@@ -32,7 +32,8 @@ var g =
         {
           if (g.e.type == 'click')
           {
-            if ((g.e.x >= x) && (g.e.x <= x + w) && (g.e.y >= y) && (g.e.y <= y + h))
+            var inzone = (b.r) ? g.c.inring (x, y, r) : g.c.inbox (x, y, w, h);
+            if (inzone)
             {
               b.a ();
             };
@@ -43,12 +44,13 @@ var g =
         {
           if (g.e.type == 'mousemove')
           {
-            if ((g.e.x >= x) && (g.e.x <= x + w) && (g.e.y >= y) && (g.e.y <= y + h))
+            var inzone = (b.r) ? g.c.inring (x, y, r) : g.c.inbox (x, y, w, h);
+            if (inzone)
             {
               if (!b.actived)
               {
                 g.c.style.cursor = 'pointer';
-                b.hide (b.id + b.i0.name);
+                var _ = (b.r) ? b.hide (b.id) : b.hide (b.id + b.i0.name);
                 b.show (b.i1);
                 b.actived = true;
               };
@@ -58,7 +60,7 @@ var g =
               if (b.actived)
               {
                 g.c.style.cursor = 'default';
-                b.hide (b.id + b.i1.name);
+                var _ = (b.r) ? b.hide (b.id) : b.hide (b.id + b.i1.name);
                 b.show (b.i0);
                 b.actived = false;
               };
@@ -76,7 +78,7 @@ var g =
         {
           if (!b.showed)
           {
-            var _ = (b.r) ? g.d = { x: b.x, y: b.y, r: b.r, f: b.f, id: b.id } : g.d = { x: b.x, y: b.y, h: b.h, w: b.w, i: i, id: b.id + i.name };
+            var _ = (b.r) ? g.d = { x: b.x, y: b.y, r: b.r, f: b.f, c: i, id: b.id } : g.d = { x: b.x, y: b.y, h: b.h, w: b.w, i: i, id: b.id + i.name };
             b.showed = true;
           };
         };
@@ -101,7 +103,20 @@ var g =
           c.height = w.innerHeight;
           c.width = w.innerWidth;
         };
+
         c.c = c.getContext ('2d');
+
+        c.inbox = function (x, y, w, h)
+        {
+          return ((g.e.x >= x) && (g.e.x <= x + w) && (g.e.y >= y) && (g.e.y <= y + h));
+        };
+
+        c.inring = function (x, y, r)
+        {
+          var l = Math.sqrt (Math.pow (g.e.x - x, 2) + Math.pow (g.e.y - y, 2));
+          return (l <= r);
+        };
+
         c.update = function ()
         {
           switch (g.e.type) {
@@ -110,16 +125,19 @@ var g =
               break;
           }
         };
+
         c.x = function (x)
         {
           var x = (x <= 1) ? x * g.c.width : x;
           return x;
         };
+
         c.xymin = function (xy)
         {
           var xy = (xy <= 1) ? xy * Math.min (g.c.height, g.c.width) : xy;
           return xy;
         };
+
         c.y = function (y)
         {
           var y = (y <= 1) ? y * g.c.height : y;
@@ -173,7 +191,7 @@ var g =
       var r = g.c.xymin (c.r);
 
       g.c.c.beginPath ();
-
+      var _ = (c.f) ? g.c.c.fillStyle = c.c : g.c.c.strokeStyle = c.c;
       switch (c.type)
       {
         case 'box':
@@ -312,15 +330,15 @@ g.b =
 { x: (g.c.width/2 - 59/2) / g.c.width, y: (g.c.height/2 - 72/2) / g.c.height, h: 72, w: 59, i0: g.i.logo, i1: g.i.logo1, id: 'logo',
   a: function ()
   {
-    g.log = 'click';
+    g.log = 'click sprite';
   }
 };
 
 g.b =
-{ x: (g.c.width/2 - 59/2) / g.c.width, y: (g.c.height/3 - 72/2) / g.c.height, h: 72, w: 59, i0: g.i.logo, i1: g.i.logo1, id: 'logo2',
+{ x: (g.c.width/3 - 59/2) / g.c.width, y: (g.c.height/2 - 72/2) / g.c.height, r: 50, f: true, i0: '#c45', i1: '#c56', id: 'round',
   a: function ()
   {
-    g.log = 'click';
+    g.log = 'click round';
   }
 };
 
