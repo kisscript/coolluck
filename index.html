@@ -19,6 +19,44 @@ var g =
   {
     var b = b;
         b.id = (b.id) ? b.id : g.buttons.length;
+        b.showed = false;
+
+        b.action = function ()
+        {
+          if (g.e.type == 'click')
+          {
+            if ((g.e.x >= b.x) && (g.e.x <= b.x + b.w))
+            {
+              if ((g.e.y >= b.y) && (g.e.y <= b.y + b.h))
+              {
+                b.a ();
+              }
+            }
+          };
+        };
+
+        b.hide = function ()
+        {
+          var id = b.i.constructor.name;
+          g.scene.splice (id);
+        };
+
+        b.show = function ()
+        {
+          if (!b.showed)
+          {
+            g.d = { x: b.x, y: b.y, h: b.h, w: b.w, i: b.i };
+            b.showed = true;
+          };
+        };
+
+        b.update = function ()
+        {
+          b.action ();
+        };
+
+    b.show ();
+    g.buttons[b.id] = b;
   },
 
   buttons: [],
@@ -182,6 +220,9 @@ var g =
 
     w.onclick = g.event;
     w.onload = g.event;
+    w.onmousedown = g.event;
+    w.onmousemove = g.event;
+    w.onmouseup = g.event;
     w.onresize = g.event;
     w.ontick = g.event;
   },
@@ -213,6 +254,7 @@ var g =
   update: function ()
   {
     g.c.update ();
+    for (var id in g.buttons) { g.buttons[id].update (); };
   }
 };
 
@@ -230,8 +272,14 @@ g.d = { x: 300, y: 110, r: 50, f: true };
 
 g.d = { x: 100, y: 110, t: 'text', f: true, s: '100px' };
 
-g.log = g.i.logo.height;
-
 g.d = { i: g.i.logo, x: (g.c.width/2 - 59/2) / g.c.width, y: (g.c.height/2 - 72/2) / g.c.height};
+
+g.b =
+{ x: 200, y: 200, h: 72, w: 59, i: g.i.logo, id: 'logo',
+  a: function ()
+  {
+    g.log = 'click';
+  }
+};
 
 </script></body></html>
