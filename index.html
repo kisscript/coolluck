@@ -1,0 +1,135 @@
+<!DOCTYPE html><html>
+  <meta charset="utf-8">
+  <style>
+    canvas {left: 0; position: absolute; top: 0;}
+  </style>
+<head>
+
+</head><body><script>
+
+var w = window;
+var d = w.document;
+
+var g =
+{
+  c: function ()
+  {
+    var c = w.d.createElement ('canvas');
+        c.a = function ()
+        {
+          c.height = w.innerHeight;
+          c.width = w.innerWidth;
+        };
+        c.c = c.getContext ('2d');
+        c.update = function ()
+        {
+          switch (g.e.type) {
+            case 'resize':
+              c.a ();
+              break;
+          }
+        };
+
+        delete g['c'];
+
+        g.c = c;
+        c.a ();
+        w.d.body.appendChild (g.c);
+  },
+
+  set d (c)
+  {
+    var c = c;
+        /*
+          c - color
+          f - fill
+          s - size
+        */
+
+        c.id = (c.id) ? c.id : g.scene.length;
+
+        c.type = 'box'; // h w x y
+        c.type = (c.i) ? 'image' : c.type; // i x y
+        c.type = (c.a) ? 'line' : c.type; // a b x y
+        c.type = (c.r) ? 'ring' : c.type; // r x y
+        c.type = (c.t) ? 'text' : c.type; // t x y
+
+        g.scene[c.id] = c;
+  },
+
+  draw: function ()
+  {
+
+  },
+
+  e: {},
+
+  event: function (event)
+  {
+    g.e = event;
+    g.run ();
+  },
+
+  load: function ()
+  {
+    g.e = { type: 'preload' };
+
+    g.c ();
+
+    //window
+    Object.defineProperty
+    (
+    	w,
+    	'ontick',
+    	{
+    		set: function (f)
+    		{
+    			w.timer = w.setInterval
+    			(
+    				function ()
+    				{
+    					f ({ type: 'tick' });
+    					g.s.time += g.s.tick;
+    				},
+    				g.s.tick
+    			);
+    		}
+    	}
+    );
+
+    w.onclick = g.event;
+    w.onload = g.event;
+    w.onresize = g.event;
+    w.ontick = g.event;
+  },
+
+  set log (text)
+  {
+    w.console.log (text);
+  },
+
+  run: function ()
+  {
+    g.update ();
+    g.draw ();
+  },
+
+  s:
+  {
+    font: '1em Arial',
+    tick: 1000,
+    time: 0
+  },
+
+  scene: [],
+
+  update: function ()
+  {
+    g.c.update ();
+  }
+};
+
+g.load ();
+g.run ();
+
+</script></body></html>
