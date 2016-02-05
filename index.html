@@ -186,6 +186,8 @@ var g =
         w.d.body.appendChild (g.c);
   },
 
+  city: [],
+
   set d (c)
   {
     var c = c;
@@ -330,7 +332,7 @@ var g =
       {
         //o.show ();
       };
-      g.o[o.id] = o;
+      g.city[o.id] = o;
     }
   },
 
@@ -426,6 +428,7 @@ var g =
   {
     g.c.update ();
     for (var id in g.button) { g.button[id].update (); };
+    for (var id in g.city) { g.city[id].update (); };
     for (var id in g.o) { g.o[id].update (); };
   }
 };
@@ -455,8 +458,6 @@ g.b =
       }
     };
     g.button['logo'].destroy ();
-
-
   }
 };
 
