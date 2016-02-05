@@ -313,9 +313,50 @@ var g =
     {
       o.id = (o.id) ? o.id : 'city' + g.o.length;
 
-      o.x = (o.x) ? o.x : g.r (0.1, 0.9);
-      o.y = (o.y) ? o.y : g.r (0.1, 0.9);
-      o.r = (o.r) ? o.r : g.r (0.03, 0.05);
+      o.ready = function ()
+      {
+        var ready = true;
+        for (var id in g.city)
+        {
+          var c = g.city[id];
+
+          var r0 = g.c.xymin (c.r);
+          var x0 = g.c.x (c.x);
+          var y0 = g.c.y (c.y);
+
+          var r1 = g.c.xymin (o.r);
+          var x1 = g.c.x (o.x);
+          var y1 = g.c.y (o.y);
+
+          var r = Math.sqrt (Math.pow (x1 - x0, 2) + Math.pow (y1 - y0, 2));
+          if (r < r0 + r1 + g.s.city.between)
+          {
+            ready = false;
+            break;
+          };
+        };
+        return ready;
+      };
+
+      if (g.city != [])
+      {
+        var ready = false;
+        while (!ready)
+        {
+          o.x = g.r (0.1, 0.9);
+          o.y = g.r (0.1, 0.9);
+          o.r = g.r (0.03, 0.05);
+          g.log = 0;
+          ready = o.ready ();
+        };
+      }
+      else
+      {
+        o.x = g.r (0.1, 0.9);
+        o.y = g.r (0.1, 0.9);
+        o.r = g.r (0.03, 0.05);
+      };
+
 
       var x = g.c.x (o.x);
       var y = g.c.y (o.y);
@@ -409,7 +450,8 @@ var g =
   {
     city:
     {
-      n: 5
+      between: 10,
+      n: 50
     },
 
     font:
