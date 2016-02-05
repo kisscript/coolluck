@@ -357,10 +357,9 @@ var g =
         o.r = g.r (0.03, 0.05);
       };
 
-
-      var x = g.c.x (o.x);
-      var y = g.c.y (o.y);
-      var r = g.c.xymin (o.r);
+      var x = o.x;
+      var y = o.y;
+      var r = o.r;
       g.b =
       { f: true, x: x, y: y, r: r, i0: '#ccc', i1: '#ddd', id: o.id,
         a: function ()
