@@ -229,6 +229,8 @@ var g =
 
       g.c.c.beginPath ();
       var _ = (c.f) ? g.c.c.fillStyle = c.c : g.c.c.strokeStyle = c.c;
+      var _ = (c.dash) ? g.c.c.setLineDash (c.dash) : undefined;
+      var _ = (c.offset) ? g.c.c.lineDashOffset = c.offset : undefined;
       switch (c.type)
       {
         case 'box':
@@ -346,7 +348,6 @@ var g =
           o.x = g.r (0.1, 0.9);
           o.y = g.r (0.1, 0.9);
           o.r = g.r (0.03, 0.05);
-          g.log = 0;
           ready = o.ready ();
         };
       }
@@ -450,7 +451,7 @@ var g =
     city:
     {
       between: 10,
-      n: 50
+      n: 5
     },
 
     font:
@@ -459,7 +460,7 @@ var g =
       size: '1em'
     },
 
-    tick: 20,
+    tick: 25,
     time: 0
   },
 
