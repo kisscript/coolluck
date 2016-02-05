@@ -42,7 +42,7 @@ var g =
     var r = g.c.xymin (b.r);
     var b = b;
         b.actived = false;
-        b.id = (b.id) ? b.id : g.button.length;
+        b.id = (b.id) ? b.id : 'b' + g.button.length;
         b.showed = false;
 
         b.i = b.id + b.i0.name;
@@ -92,6 +92,7 @@ var g =
         b.destroy = function ()
         {
           g.c.style.cursor = 'default';
+          b.hide (b.id);
           b.hide (b.id + b.i0.name);
           b.hide (b.id + b.i1.name);
           delete g.button[b.id];
@@ -303,6 +304,35 @@ var g =
     g.run ();
   },
 
+  g:
+  {
+    set city (o)
+    {
+      o.id = (o.id) ? o.id : 'city' + g.o.length;
+
+      o.x = (o.x) ? o.x : g.r (0.1, 0.9);
+      o.y = (o.y) ? o.y : g.r (0.1, 0.9);
+      o.r = (o.r) ? o.r : g.r (0.03, 0.05);
+
+      var x = g.c.x (o.x);
+      var y = g.c.y (o.y);
+      var r = g.c.xymin (o.r);
+      g.b =
+      { f: true, x: x, y: y, r: r, i0: '#ccc', i1: '#ddd', id: o.id,
+        a: function ()
+        {
+          g.log = o.id;
+        }
+      };
+
+      o.update = function ()
+      {
+        //o.show ();
+      };
+      g.o[o.id] = o;
+    }
+  },
+
   i:
   {
     set l (list)
@@ -360,6 +390,12 @@ var g =
 
   o: [],
 
+  r: function (min, max)
+  {
+    var r = (max) ? Math.random () * (max - min) + min : Math.random () * min;
+    return r;
+  },
+
   run: function ()
   {
     g.update ();
@@ -368,11 +404,17 @@ var g =
 
   s:
   {
+    city:
+    {
+      n: 5
+    },
+
     font:
     {
       family: 'Arial',
       size: '1em'
     },
+
     tick: 20,
     time: 0
   },
@@ -407,6 +449,8 @@ g.b =
     g.log = 'click sprite';
     g.effect.circle = { x: x, y: y, c: '#bbb' };
     g.button['logo'].destroy ();
+
+    for (var i = 0; i < g.s.city.n; i++) { g.g.city = { id: 'city' + i }; };
   }
 };
 
