@@ -68,6 +68,7 @@ var g =
             {
               if (!b.actived)
               {
+                var _ = (b.over) ? b.over () : undefined;
                 g.c.style.cursor = 'pointer';
                 b.i = (b.r) ? b.id : b.id + b.i0.name;
                 b.hide (b.i);
@@ -79,6 +80,7 @@ var g =
             {
               if (b.actived)
               {
+                var _ = (b.out) ? b.out () : undefined;
                 g.c.style.cursor = 'default';
                 b.i = (b.r) ? b.id : b.id + b.i1.name;
                 b.hide (b.i);
@@ -323,6 +325,17 @@ var g =
         g.log = 'camp';
       };
 
+      var idrad = 'camp_zone';
+      o.out = function ()
+      {
+        delete g.scene[idrad];
+      };
+
+      o.over = function ()
+      {
+        g.d = { x: o.x, y: o.y, r: o.r2, c: g.s.camp.color2, id: idrad, dash: [1, 3] };
+      };
+
       o.move = function ()
       {
         if (!o.moved)
@@ -344,7 +357,11 @@ var g =
           {
             delete g.scene[id];
             delete g.scene[id2];
-            g.b = { x: g.e.x, y: g.e.y, r: r, i0: g.s.camp.color, i1: g.s.camp.color2, id: id3, dash: [], f: true, a: o.manage };
+            o.x = g.e.x / g.c.width;
+            o.y = g.e.y / g.c.height;
+            o.r = r / Math.min (g.c.height, g.c.width);
+            o.r2 = r2 / Math.min (g.c.height, g.c.width);
+            g.b = { x: o.x, y: o.y, r: o.r, i0: g.s.camp.color, i1: g.s.camp.color2, id: id3, dash: [], f: true, a: o.manage, out: o.out, over: o.over };
             o.moved = true;
           };
         };
