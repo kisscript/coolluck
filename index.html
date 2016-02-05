@@ -285,6 +285,7 @@ var g =
               {
                 delete g.scene[id];
                 delete g.o[id];
+                e.next ();
               };
             };
           };
@@ -447,10 +448,15 @@ g.b =
     var x = (g.c.width/2) / g.c.width;
     var y = (g.c.height/2) / g.c.height;
     g.log = 'click sprite';
-    g.effect.circle = { x: x, y: y, c: '#bbb' };
+    g.effect.circle = { x: x, y: y, c: '#bbb',
+      next: function ()
+      {
+        for (var i = 0; i < g.s.city.n; i++) { g.g.city = { id: 'city' + i }; };
+      }
+    };
     g.button['logo'].destroy ();
 
-    for (var i = 0; i < g.s.city.n; i++) { g.g.city = { id: 'city' + i }; };
+
   }
 };
 
