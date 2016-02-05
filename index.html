@@ -101,6 +101,11 @@ var g =
 
         b.update = function ()
         {
+          x = g.c.x (b.x);
+          y = g.c.y (b.y);
+          w = g.c.x (b.w);
+          h = g.c.y (b.h);
+          r = g.c.xymin (b.r);
           b.action ();
           b.active ();
         };
