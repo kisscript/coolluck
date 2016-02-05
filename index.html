@@ -17,8 +17,6 @@ var g =
 {
   set a (a)
   {
-    //a.tick - period
-    //a.time - full animation time
     var x = g.c.x (b.x);
     var y = g.c.y (b.y);
     var w = g.c.x (b.w);
@@ -26,7 +24,10 @@ var g =
     var r = g.c.xymin (b.r);
     var a = a;
         a.id = (a.id) ? a.id : g.animate.length;
+        a.s = [];
         a.t = 0;
+        a.tick = (a.tick) ? a.tick : a.time / a.step.length;
+        a.time = (a.time) ? a.time : a.tick * a.step.length;
     g.animate[a.id] = a;
   },
 
@@ -43,6 +44,8 @@ var g =
         b.actived = false;
         b.id = (b.id) ? b.id : g.button.length;
         b.showed = false;
+
+        b.i = b.id + b.i0.name;
 
         b.action = function ()
         {
@@ -66,7 +69,8 @@ var g =
               if (!b.actived)
               {
                 g.c.style.cursor = 'pointer';
-                var _ = (b.r) ? b.hide (b.id) : b.hide (b.id + b.i0.name);
+                b.i = (b.r) ? b.id : b.id + b.i0.name;
+                b.hide (b.i);
                 b.show (b.i1);
                 b.actived = true;
               };
@@ -76,12 +80,21 @@ var g =
               if (b.actived)
               {
                 g.c.style.cursor = 'default';
-                var _ = (b.r) ? b.hide (b.id) : b.hide (b.id + b.i1.name);
+                b.i = (b.r) ? b.id : b.id + b.i1.name;
+                b.hide (b.i);
                 b.show (b.i0);
                 b.actived = false;
               };
             };
           };
+        };
+
+        b.destroy = function ()
+        {
+          g.c.style.cursor = 'default';
+          b.hide (b.id + b.i0.name);
+          b.hide (b.id + b.i1.name);
+          delete g.button[b.id];
         };
 
         b.hide = function (id)
@@ -243,6 +256,47 @@ var g =
 
   e: {},
 
+  effect:
+  {
+    set circle (e)
+    {
+      var x = g.c.x (e.x);
+      var y = g.c.y (e.y);
+      var r = 1;
+      var id = 'effect_circle';
+      var R = Math.min (g.c.height * 2, g.c.width * 2);
+      var steps = 40;
+
+      var o = {};
+          o.id = id;
+
+          o.animate = function ()
+          {
+            if (g.e.type == 'tick')
+            {
+              r += R / steps;
+              if (r < R)
+              {
+                delete g.scene[id];
+                g.d = { x: x, y: y, r: r, c: e.c, f: true, id: id };
+              }
+              else
+              {
+                delete g.scene[id];
+                delete g.o[id];
+              };
+            };
+          };
+
+          o.update = function ()
+          {
+            o.animate ();
+          };
+
+      g.o[id] = o;
+    }
+  },
+
   event: function (event)
   {
     g.e = event;
@@ -304,6 +358,8 @@ var g =
     w.console.log (text);
   },
 
+  o: [],
+
   run: function ()
   {
     g.update ();
@@ -317,7 +373,7 @@ var g =
       family: 'Arial',
       size: '1em'
     },
-    tick: 100,
+    tick: 20,
     time: 0
   },
 
@@ -327,6 +383,7 @@ var g =
   {
     g.c.update ();
     for (var id in g.button) { g.button[id].update (); };
+    for (var id in g.o) { g.o[id].update (); };
   }
 };
 
@@ -339,16 +396,24 @@ g.i.l =
   logo1: 'logo1.svg'
 };
 
+var x = (g.c.width/2 - 59/2) / g.c.width;
+var y = (g.c.height/2 - 72/2) / g.c.height;
 g.b =
-{ x: (g.c.width/2 - 59/2) / g.c.width, y: (g.c.height/2 - 72/2) / g.c.height, h: 72, w: 59, i0: g.i.logo, i1: g.i.logo1, id: 'logo',
+{ x: x, y: y, h: 72, w: 59, i0: g.i.logo, i1: g.i.logo1, id: 'logo',
   a: function ()
   {
+    var x = (g.c.width/2) / g.c.width;
+    var y = (g.c.height/2) / g.c.height;
     g.log = 'click sprite';
+    g.effect.circle = { x: x, y: y, c: '#bbb' };
+    g.button['logo'].destroy ();
   }
 };
 
+var x = (g.c.width/3 - 59/2) / g.c.width;
+var y = (g.c.height/2 - 72/2) / g.c.height;
 g.b =
-{ x: (g.c.width/3 - 59/2) / g.c.width, y: (g.c.height/2 - 72/2) / g.c.height, r: 50, f: true, i0: '#c45', i1: '#c56', id: 'round',
+{ x: x, y: y, r: 50, f: true, i0: '#c45', i1: '#c56', id: 'round',
   a: function ()
   {
     g.log = 'click round';
