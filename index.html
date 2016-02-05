@@ -228,6 +228,7 @@ var g =
       var r = g.c.xymin (c.r);
 
       g.c.c.beginPath ();
+      g.c.c.lineWidth = (c.s) ? c.s : 1;
       var _ = (c.f) ? g.c.c.fillStyle = c.c : g.c.c.strokeStyle = c.c;
       var _ = (c.dash) ? g.c.c.setLineDash (c.dash) : undefined;
       var _ = (c.offset) ? g.c.c.lineDashOffset = c.offset : undefined;
@@ -244,6 +245,7 @@ var g =
         case 'line':
           g.c.c.moveTo (a, b);
           g.c.c.lineTo (x, y);
+          g.c.c.stroke ();
           break;
 
         case 'ring':
@@ -374,6 +376,56 @@ var g =
         //o.show ();
       };
       g.city[o.id] = o;
+    },
+
+    set path (o)
+    {
+      o.getend = function ()
+      {
+        var end = o.begin;
+        while (end == o.begin)
+        {
+          end = g.r (0, g.s.city.n, true);
+        };
+        return end;
+      };
+
+      o.ready = function ()
+      {
+        var ready = true;
+        for (var id in g.path)
+        {
+          var p = g.path[id];
+          if (o.id == id)
+          {
+            ready = false;
+            break;
+          };
+        };
+        return ready;
+      };
+
+      var ready = false;
+      while (!ready)
+      {
+        o.begin = 'city' + g.r (0, g.s.city.n, true);
+        o.end = 'city' + o.getend ();
+
+        o.id = o.begin + o.end;
+        ready = o.ready ();
+      };
+
+      if ((g.city[o.begin] != undefined) && (g.city[o.end] != undefined))
+      {
+        var a = g.city[o.begin].x;
+        var b = g.city[o.begin].y;
+
+        var x = g.city[o.end].x;
+        var y = g.city[o.end].y;
+        g.d = { a: a, b: b, x: x, y: y, c: '#888', dash: [4, 4] };
+      };
+
+      g.path[o.id] = o;
     }
   },
 
@@ -434,9 +486,12 @@ var g =
 
   o: [],
 
-  r: function (min, max)
+  path: [],
+
+  r: function (min, max, floor)
   {
     var r = (max) ? Math.random () * (max - min) + min : Math.random () * min;
+        r = (floor) ? Math.floor (Math.random() * (max - min + 1)) + min : r;
     return r;
   },
 
@@ -450,6 +505,11 @@ var g =
   {
     city:
     {
+      path:
+      {
+        min: 3,
+        max: 9
+      },
       between: 10,
       n: 5
     },
@@ -497,6 +557,7 @@ g.b =
       next: function ()
       {
         for (var i = 0; i < g.s.city.n; i++) { g.g.city = { id: 'city' + i }; };
+        for (var i = 0; i < g.s.city.path.max; i++) { g.g.path = {}; };
       }
     };
     g.button['logo'].destroy ();
