@@ -313,6 +313,18 @@ var g =
 
   g:
   {
+    set camp (o)
+    {
+      o.id = 'camp';
+      o.moved = false;
+
+      o.update = function ()
+      {
+
+      };
+      g.o[o.id] = o;
+    },
+
     set city (o)
     {
       o.id = (o.id) ? o.id : 'city' + g.o.length;
@@ -364,7 +376,7 @@ var g =
       var y = o.y;
       var r = o.r;
       g.b =
-      { f: true, x: x, y: y, r: r, i0: '#ccc', i1: '#ddd', id: o.id,
+      { f: true, x: x, y: y, r: r, i0: g.s.city.color.default, i1: g.s.city.color.active, id: o.id,
         a: function ()
         {
           g.log = o.id;
@@ -520,6 +532,11 @@ var g =
   {
     city:
     {
+      color:
+      {
+        active: '#aaa',
+        default: '#888'
+      },
       path:
       {
         min: 3,
