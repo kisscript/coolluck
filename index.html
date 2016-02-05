@@ -318,9 +318,36 @@ var g =
       o.id = 'camp';
       o.moved = false;
 
+      o.move = function ()
+      {
+        if (!o.moved)
+        {
+          var id = 'camp_move';
+          var id2 = 'camp_move2';
+          var id3 = 'camp';
+          var r = g.c.xymin (g.s.camp.size);
+          var r2 = g.c.xymin (g.s.camp.size2);
+          if (g.e.type == 'mousemove')
+          {
+            delete g.scene[id];
+            delete g.scene[id2];
+            g.d = { x: g.e.x, y: g.e.y, r: r, c: g.s.camp.color, id: id, dash: [], f: true };
+            g.d = { x: g.e.x, y: g.e.y, r: r2, c: g.s.camp.color2, id: id2, dash: [] };
+          };
+
+          if (g.e.type == 'click')
+          {
+            delete g.scene[id];
+            delete g.scene[id2];
+            g.d = { x: g.e.x, y: g.e.y, r: r, c: g.s.camp.color, id: id3, dash: [], f: true };
+            o.moved = true;
+          };
+        };
+      };
+
       o.update = function ()
       {
-
+        o.move ();
       };
       g.o[o.id] = o;
     },
@@ -530,6 +557,14 @@ var g =
 
   s:
   {
+    camp:
+    {
+      color: '#87c',
+      color2: '#87c',
+      size: 0.025,
+      size2: 0.05
+    },
+
     city:
     {
       color:
@@ -591,6 +626,7 @@ g.b =
       {
         for (var i = 0; i < g.s.city.n; i++) { g.g.city = { id: 'city' + i }; };
         for (var i = 0; i < g.s.city.path.max; i++) { g.g.path = {}; };
+        g.g.camp = {};
       }
     };
     g.button['logo'].destroy ();
