@@ -352,14 +352,17 @@ var g =
           {
             delete g.scene[id];
             delete g.scene[id2];
+            delete g.scene[id + 'tip'];
             g.d = { x: g.e.x, y: g.e.y, r: r, c: g.s.camp.color, id: id, dash: [], f: true };
             g.d = { x: g.e.x, y: g.e.y, r: r2, c: g.s.camp.color2, id: id2, dash: [] };
+            g.d = { x: 0.5, y: 0.5, t: 'Choose a place for camp', f: true, c: g.s.camp.color2, id: id + 'tip' };
           };
 
           if (g.e.type == 'click')
           {
             delete g.scene[id];
             delete g.scene[id2];
+            delete g.scene[id + 'tip'];
             o.x = g.e.x / g.c.width;
             o.y = g.e.y / g.c.height;
             o.r = r / Math.min (g.c.height, g.c.width);
