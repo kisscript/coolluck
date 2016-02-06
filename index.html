@@ -440,7 +440,7 @@ var g =
       g.d = { x: o.x, y: o.y, r: g.s.citizen.size, f: true, c: g.s.citizen.color, id: o.id + o.name };
 
       var oldtime = g.o.clock.time;
-      var step = 1 / g.s.clock.d / g.s.tick;
+      var step = 1 / g.s.clock.d / g.s.tick * o.speed * 0.2;
       var path = 0;
       o.move = function ()
       {
