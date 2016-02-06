@@ -636,7 +636,7 @@ var g =
               if (g.e.type == 'tick')
               {
                 delete g.scene[o.id];
-                if (o.offset < 8) { o.offset += 0.15; } else { o.offset = 0; };
+                if (o.offset < 8) { o.offset += 0.02; } else { o.offset = 0; };
                 g.d = { a: a, b: b, x: x, y: y, c: '#888', dash: [4, 4], offset: o.offset, id: o.id };
               }
             };
