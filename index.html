@@ -604,76 +604,52 @@ var g =
       g.o[o.id] = o;
     },
 
-    set path (o)
+    set paths (o)
     {
-      o.getend = function ()
+      var i = 0;
+      for (var id in g.city)
       {
-        var end = o.begin;
-        while (end == o.begin)
+        o.begin = g.city[id];
+        g.path[id] = {};
+        i++;
+        var j = 0;
+        for (var id2 in g.city)
         {
-          end = g.r (0, g.s.city.n, true);
-        };
-        return end;
-      };
-
-      o.ready = function ()
-      {
-        var ready = true;
-        for (var id in g.path)
-        {
-          var p = g.path[id];
-          if (o.id == id)
+          j++;
+          if ((id != id2) && (j > i))
           {
-            ready = false;
-            break;
+            o.end = g.city[id2];
+
+            var a = o.begin.x;
+            var b = o.begin.y;
+
+            var x = o.end.x;
+            var y = o.end.y;
+
+            o.id = o.begin.id + o.end.id;
+            g.d = { a: a, b: b, x: x, y: y, c: '#888', dash: [4, 4], id: o.id };
+            o.s = Math.sqrt (Math.pow (a - x, 2) + Math.pow (b - y, 2));
+
+            o.offset = 0;
+            o.animate = function ()
+            {
+              if (g.e.type == 'tick')
+              {
+                delete g.scene[o.id];
+                if (o.offset < 8) { o.offset += 0.15; } else { o.offset = 0; };
+                g.d = { a: a, b: b, x: x, y: y, c: '#888', dash: [4, 4], offset: o.offset, id: o.id };
+              }
+            };
+
+            o.update = function ()
+            {
+              o.animate ();
+            };
+
+            g.path[id][id2] = o;
           };
         };
-        return ready;
       };
-
-      var ready = false;
-      while (!ready)
-      {
-        o.begin = 'city' + g.r (0, g.s.city.n, true);
-        o.end = 'city' + o.getend ();
-
-        o.id = o.begin + o.end;
-        ready = o.ready ();
-      };
-
-      if ((g.city[o.begin] != undefined) && (g.city[o.end] != undefined))
-      {
-        var a = g.city[o.begin].x;
-        var b = g.city[o.begin].y;
-
-        var x = g.city[o.end].x;
-        var y = g.city[o.end].y;
-        g.d = { a: a, b: b, x: x, y: y, c: '#888', dash: [4, 4], id: o.begin + o.end };
-
-        o.s = Math.sqrt (Math.pow (a - x, 2) + Math.pow (b - y, 2));
-        if (o.s == 0)
-        {
-          delete g.path[o.id];
-          return;
-        };
-      };
-
-      o.offset = 0;
-      o.animate = function ()
-      {
-        if (g.e.type == 'tick')
-        {
-          delete g.scene[o.begin + o.end];
-          if (o.offset < 8) { o.offset += 0.15; } else { o.offset = 0; };
-          g.d = { a: a, b: b, x: x, y: y, c: '#888', dash: [4, 4], offset: o.offset, id: o.begin + o.end };
-        }
-      };
-
-      o.update = function ()
-      {
-        o.animate ();
-      };
-      g.path[o.id] = o;
     }
   },
 
@@ -786,7 +762,7 @@ var g =
         max: 20
       },
       between: 10,
-      n: 10
+      n: 5
     },
 
     clock:
@@ -806,6 +782,11 @@ var g =
       size: '1em'
     },
 
+    path:
+    {
+      ini: false
+    },
+
     tick: 25,
     time: 0
   },
@@ -818,7 +799,13 @@ var g =
     for (var id in g.button) { g.button[id].update (); };
     for (var id in g.city) { g.city[id].update (); };
     for (var id in g.o) { g.o[id].update (); };
-    for (var id in g.path) { g.path[id].update (); };
+    for (var id in g.path)
+    {
+      for (var id2 in g.path[id])
+      {
+        g.path[id][id2].update ();
+      };
+    };
   }
 };
 
@@ -845,7 +832,7 @@ g.b =
       {
         g.g.clock = {};
         for (var i = 0; i < g.s.city.n; i++) { g.g.city = { id: 'city' + i }; };
-        for (var i = 0; i < g.s.city.path.max; i++) { g.g.path = {}; };
+        g.g.paths = {};
         for (var i = 0; i < g.s.citizen.n; i++) { g.g.citizen = {}; };
         g.g.camp = {};
       }
