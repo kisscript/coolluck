@@ -376,6 +376,17 @@ var g =
       g.o[o.id] = o;
     },
 
+    set citizen (o)
+    {
+      o.id = 'citizen' + g.o.length;
+
+      o.update = function ()
+      {
+
+      };
+      g.o[o.id] = o;
+    },
+
     set city (o)
     {
       o.id = (o.id) ? o.id : 'city' + g.o.length;
@@ -468,10 +479,12 @@ var g =
           var y = g.c.y (g.s.clock.y);
           var r = g.c.xymin (g.s.clock.r);
           if ((Math.floor (g.s.time / 1000) > o.time)) { o.time = Math.floor (g.s.time / 1000); };
+          g.d = { x: x, y: y, r: r, f: true, c: g.s.clock.color, id: o.id + 'bg', dash: [] };
+          g.d = { x: x, y: y, r: r - 2, a0: 1.5 * Math.PI, a1: o.angle, s: 5, f: false, c: g.s.clock.color2, id: o.id + 'shadow', dash: [] };
           g.d = { x: x, y: y, r: r, a0: 1.5 * Math.PI, a1: o.angle, s: 5, f: false, c: g.s.clock.color, id: o.id, dash: [] };
           g.c.c.textAlign = 'center';
           g.c.c.textBaseline = 'middle';
-          g.d = { x: x, y: y, t: o.day.toString (), f: true, c: g.s.clock.color, s: '2em', id: o.id + 'text' };
+          g.d = { x: x, y: y, t: o.day.toString (), f: true, c: g.s.clock.color2, s: '2em', id: o.id + 'text' };
           o.angle += Math.PI / (g.s.clock.d * 500 / g.s.tick);
           if (o.angle > 1.5 * Math.PI)
           {
@@ -482,6 +495,8 @@ var g =
         else
         {
           delete g.scene[o.id];
+          delete g.scene[o.id + 'bg'];
+          delete g.scene[o.id + 'shadow'];
           delete g.scene[o.id + 'text'];
         };
       };
@@ -660,6 +675,7 @@ var g =
     clock:
     {
       color: '#87c',
+      color2: '#65a',
       d: 60,
       r: 0.04,
       x: 0.5,
