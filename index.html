@@ -381,7 +381,25 @@ var g =
     {
       o.id = 'citizen' + g.o.length;
       o.name = g.s.citizen.name[g.r (0, g.s.citizen.name.length - 1, true)];
-      g.log = o.name;
+
+      o.gethome = function ()
+      {
+        var home = g.r (0, g.s.city.n - 1, true);
+        var i = 0;
+        for (var id in g.city)
+        {
+          if (i == home)
+          {
+            home = g.city[id];
+            break;
+          };
+          i++;
+        };
+        return home;
+      };
+      o.home = o.gethome ();
+
+      g.log = o.name + ' from ' + o.home.id;
 
       o.update = function ()
       {
@@ -662,7 +680,7 @@ var g =
     citizen:
     {
       n: 5,
-      name: [ 'Дарк', 'Нульч', 'Творог', 'Ыыыыы', 'Кожемяка', 'Абу', 'Педро', 'Модер', 'Твити' ]
+      name: [ 'Дарк', 'Нульч', 'Творог', 'Ыыыыы', 'Кожемяка', 'Абу', 'Педро', 'Модер', 'Твити', 'Лесси' ]
     },
 
     city:
