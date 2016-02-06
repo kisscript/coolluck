@@ -346,7 +346,6 @@ var g =
       {
         if (!o.moved)
         {
-          movefirst = true;
           var id = 'camp_move';
           var id2 = 'camp_move2';
           var id3 = 'camp';
@@ -354,6 +353,7 @@ var g =
           var r2 = g.c.xymin (g.s.camp.size2);
           if (g.e.type == 'mousemove')
           {
+            movefirst = true;
             delete g.scene[id];
             delete g.scene[id2];
             delete g.scene[id + 'tip'];
