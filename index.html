@@ -455,7 +455,7 @@ var g =
             var x1 = o.town.x; var y1 = o.town.y;
             var x2 = o.goto.x; var y2 = o.goto.y;
             var s = Math.sqrt (Math.pow (x1 - x2, 2) + Math.pow (y1 - y2, 2));
-            if (path < s)
+            if (path <= s)
             {
               var l1 = path;
               var l2 = s - path;
@@ -468,6 +468,7 @@ var g =
             }
             else
             {
+              path = 0;
               o.town = o.goto;
               o.goto = o.select ();
             };
