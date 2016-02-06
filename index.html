@@ -425,6 +425,7 @@ var g =
             if (c.id == o.town.id)
             {
               o.goto = o.select ();
+              return;
             }
             else
             {
@@ -765,7 +766,7 @@ var g =
       color: '#3FDBFF',
       gold: { min: 0, max: 10 },
       hp: { min: 1, max: 10 },
-      n: 50,
+      n: 10,
       now: 0,
       name: [ 'Дарк', 'Нульч', 'Творог', 'Ыыыыы', 'Кожемяка', 'Абу', 'Педро', 'Модер', 'Твити', 'Лесси' ],
       power: { min: 0, max: 5 },
@@ -784,10 +785,10 @@ var g =
       path:
       {
         min: 3,
-        max: 100
+        max: 20
       },
       between: 10,
-      n: 50
+      n: 10
     },
 
     clock:
