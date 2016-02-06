@@ -340,10 +340,13 @@ var g =
         g.d = { x: o.x, y: o.y, r: o.r2, c: g.s.camp.color2, id: idrad, dash: [1, 3] };
       };
 
+      var movefirst = false;
+
       o.move = function ()
       {
         if (!o.moved)
         {
+          movefirst = true;
           var id = 'camp_move';
           var id2 = 'camp_move2';
           var id3 = 'camp';
@@ -359,7 +362,7 @@ var g =
             g.d = { x: 0.5, y: 0.5, t: 'Choose a place for camp', f: true, c: g.s.camp.color2, id: id + 'tip' };
           };
 
-          if (g.e.type == 'click')
+          if ((g.e.type == 'click') && (movefirst))
           {
             delete g.scene[id];
             delete g.scene[id2];
