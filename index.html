@@ -385,6 +385,11 @@ var g =
       o.id = 'citizen' + g.o.length;
       o.name = g.s.citizen.name[g.r (0, g.s.citizen.name.length - 1, true)];
 
+      o.gold = g.r (g.s.citizen.gold.min, g.s.citizen.gold.max, true);
+      o.hp = g.r (g.s.citizen.hp.min, g.s.citizen.hp.max, true);
+      o.power = g.r (g.s.citizen.power.min, g.s.citizen.power.max, true);
+      o.speed = g.r (g.s.citizen.speed.min, g.s.citizen.speed.max, true);
+
       o.gethome = function ()
       {
         var home = g.r (0, g.s.city.n - 1, true);
@@ -402,7 +407,23 @@ var g =
       };
       o.home = o.gethome ();
 
-      g.log = o.name + ' from ' + o.home.id;
+      g.log = o.name + ' from ' + o.home.name;
+
+      var oldtime = g.o.clock.time;
+      o.move = function ()
+      {
+        if (g.e.type == 'tick')
+        {
+          if ( g.o.clock.time > oldtime)
+          {
+            oldtime = g.o.clock.time;
+            if (g.o.clock.time % o.speed)
+            {
+
+            };
+          };
+        };
+      };
 
       o.update = function ()
       {
@@ -414,6 +435,7 @@ var g =
     set city (o)
     {
       o.id = (o.id) ? o.id : 'city' + g.o.length;
+      o.name = g.s.city.name[g.r (0, g.s.city.name.length - 1, true)];
 
       o.ready = function ()
       {
@@ -508,7 +530,7 @@ var g =
           g.d = { x: x, y: y, r: r, a0: 1.5 * Math.PI, a1: o.angle, s: 5, f: false, c: g.s.clock.color, id: o.id, dash: [] };
           g.c.c.textAlign = 'center';
           g.c.c.textBaseline = 'middle';
-          g.d = { x: x, y: y, t: o.day.toString (), f: true, c: g.s.clock.color2, s: '2em', id: o.id + 'text' };
+          g.d = { x: x, y: y, t: o.day.toString (), f: true, c: g.s.clock.color2, s: g.s.clock.size, id: o.id + 'text' };
           o.angle += Math.PI / (g.s.clock.d * 500 / g.s.tick);
           if (o.angle > 1.5 * Math.PI)
           {
@@ -682,8 +704,12 @@ var g =
 
     citizen:
     {
+      gold: { min: 0, max: 10 },
+      hp: { min: 1, max: 10 },
       n: 5,
-      name: [ 'Дарк', 'Нульч', 'Творог', 'Ыыыыы', 'Кожемяка', 'Абу', 'Педро', 'Модер', 'Твити', 'Лесси' ]
+      name: [ 'Дарк', 'Нульч', 'Творог', 'Ыыыыы', 'Кожемяка', 'Абу', 'Педро', 'Модер', 'Твити', 'Лесси' ],
+      power: { min: 0, max: 5 },
+      speed: { min: 1, max: 10 }
     },
 
     city:
@@ -693,6 +719,7 @@ var g =
         active: '#888',
         default: '#888'
       },
+      name: [ 'Битардск', 'Сычов', 'Мухосранск', 'Наш Крым', 'Ерохеевка', 'Абучан', 'Нульчан', 'Сырнарния', 'Охрененск', 'Зашкваринск' ],
       path:
       {
         min: 3,
@@ -708,6 +735,7 @@ var g =
       color2: '#65a',
       d: 60,
       r: 0.04,
+      size: '1.5em',
       x: 0.5,
       y: 0.05
     },
