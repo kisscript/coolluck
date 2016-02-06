@@ -380,6 +380,8 @@ var g =
     set citizen (o)
     {
       o.id = 'citizen' + g.o.length;
+      o.name = g.s.citizen.name[g.r (0, g.s.citizen.name.length - 1, true)];
+      g.log = o.name;
 
       o.update = function ()
       {
@@ -657,6 +659,12 @@ var g =
       size2: 0.05
     },
 
+    citizen:
+    {
+      n: 5,
+      name: [ 'Дарк', 'Нульч', 'Творог', 'Ыыыыы', 'Кожемяка', 'Абу', 'Педро', 'Модер', 'Твити' ]
+    },
+
     city:
     {
       color:
@@ -726,10 +734,11 @@ g.b =
     g.effect.circle = { x: x, y: y, c: '#bbb',
       next: function ()
       {
+        g.g.clock = {};
         for (var i = 0; i < g.s.city.n; i++) { g.g.city = { id: 'city' + i }; };
         for (var i = 0; i < g.s.city.path.max; i++) { g.g.path = {}; };
+        for (var i = 0; i < g.s.citizen.n; i++) { g.g.citizen = {}; };
         g.g.camp = {};
-        g.g.clock = {};
       }
     };
     g.button['logo'].destroy ();
