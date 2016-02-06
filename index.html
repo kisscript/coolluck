@@ -437,7 +437,7 @@ var g =
 
       o.x = o.home.x;
       o.y = o.home.y;
-      g.d = { x: o.x, y: o.y, r: g.s.citizen.size, f: true, c: g.s.citizen.color, id: o.id };
+      g.d = { x: o.x, y: o.y, r: g.s.citizen.size, f: true, c: g.s.citizen.color, id: o.id + o.name };
 
       var oldtime = g.o.clock.time;
       var step = 1 / g.s.clock.d / g.s.tick;
