@@ -427,7 +427,7 @@ var g =
       o.goto = o.select ();
 
       var oldtime = g.o.clock.time;
-      var step = 1 / g.s.clock.d;
+      var step = 1 / g.s.clock.d / g.s.tick;
       var path = 0;
       o.move = function ()
       {
@@ -439,33 +439,26 @@ var g =
         {
           if (g.e.type == 'tick')
           {
-            if ( g.o.clock.time > oldtime)
+            var x1 = o.town.x; var y1 = o.town.y;
+            var x2 = o.goto.x; var y2 = o.goto.y;
+            var s = Math.sqrt (Math.pow (x1 - x2, 2) + Math.pow (y1 - y2, 2));
+            g.log = s;
+            if (path < s)
             {
-              oldtime = g.o.clock.time;
-              if (g.o.clock.time % o.speed == 0)
-              {
-                var x1 = o.town.x; var y1 = o.town.y;
-                var x2 = o.goto.x; var y2 = o.goto.y;
-                var s = Math.sqrt (Math.pow (x1 - x2, 2) + Math.pow (y1 - y2, 2));
-                g.log = s;
-                if (path < s)
-                {
-                  var l1 = path;
-                  var l2 = s - path;
-                  var l12 = l1/l2;
-                  var x = (x1 + x2 * l12) / (1 + l12); var y = (y1 + y2 * l12) / (1 + l12);
-                  x = g.c.x (x); y = g.c.y (y);
-                  g.log = l2;
-                  path += step;
-                  delete g.scene[o.id + o.name];
-                  g.d = { x: x, y: y, r: g.s.citizen.size, f: true, c: g.s.citizen.color, id: o.id + o.name };
-                }
-                else
-                {
-                  o.town = o.goto;
-                  o.goto = o.select ();
-                };
-              };
+              var l1 = path;
+              var l2 = s - path;
+              var l12 = l1/l2;
+              var x = (x1 + x2 * l12) / (1 + l12); var y = (y1 + y2 * l12) / (1 + l12);
+              x = g.c.x (x); y = g.c.y (y);
+              g.log = l2;
+              path += step;
+              delete g.scene[o.id + o.name];
+              g.d = { x: x, y: y, r: g.s.citizen.size, f: true, c: g.s.citizen.color, id: o.id + o.name };
+            }
+            else
+            {
+              o.town = o.goto;
+              o.goto = o.select ();
             };
           };
         };
