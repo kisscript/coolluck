@@ -383,7 +383,9 @@ var g =
 
     set citizen (o)
     {
-      o.id = 'citizen' + g.o.length;
+
+      o.id = 'citizen' + Object.keys (g.o).length;
+      g.log = o.id;
       o.name = g.s.citizen.name[g.r (0, g.s.citizen.name.length - 1, true)];
 
       o.gold = g.r (g.s.citizen.gold.min, g.s.citizen.gold.max, true);
@@ -417,14 +419,26 @@ var g =
         var i = 0;
         for (var id in g.city)
         {
+          var c = g.city[id];
           if (i == n)
           {
-            return g.city[id];
+            if (c.id == o.town.id)
+            {
+              o.goto = o.select ();
+            }
+            else
+            {
+              return g.city[id];
+            };
           };
           i++;
         };
       };
       o.goto = o.select ();
+
+      o.x = o.home.x;
+      o.y = o.home.y;
+      g.d = { x: o.x, y: o.y, r: g.s.citizen.size, f: true, c: g.s.citizen.color, id: o.id };
 
       var oldtime = g.o.clock.time;
       var step = 1 / g.s.clock.d / g.s.tick;
@@ -442,7 +456,6 @@ var g =
             var x1 = o.town.x; var y1 = o.town.y;
             var x2 = o.goto.x; var y2 = o.goto.y;
             var s = Math.sqrt (Math.pow (x1 - x2, 2) + Math.pow (y1 - y2, 2));
-            g.log = s;
             if (path < s)
             {
               var l1 = path;
@@ -450,7 +463,6 @@ var g =
               var l12 = l1/l2;
               var x = (x1 + x2 * l12) / (1 + l12); var y = (y1 + y2 * l12) / (1 + l12);
               x = g.c.x (x); y = g.c.y (y);
-              g.log = l2;
               path += step;
               delete g.scene[o.id + o.name];
               g.d = { x: x, y: y, r: g.s.citizen.size, f: true, c: g.s.citizen.color, id: o.id + o.name };
@@ -473,7 +485,7 @@ var g =
 
     set city (o)
     {
-      o.id = (o.id) ? o.id : 'city' + g.o.length;
+      o.id = (o.id) ? o.id : 'city' + Object.keys (g.o).length;
       o.name = g.s.city.name[g.r (0, g.s.city.name.length - 1, true)];
 
       o.ready = function ()
@@ -754,6 +766,7 @@ var g =
       gold: { min: 0, max: 10 },
       hp: { min: 1, max: 10 },
       n: 5,
+      now: 0,
       name: [ 'Дарк', 'Нульч', 'Творог', 'Ыыыыы', 'Кожемяка', 'Абу', 'Педро', 'Модер', 'Твити', 'Лесси' ],
       power: { min: 0, max: 5 },
       size: 0.01,
