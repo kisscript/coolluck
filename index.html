@@ -468,7 +468,7 @@ var g =
           g.d = { x: x, y: y, r: r, a0: 1.5 * Math.PI, a1: o.time, s: 3, f: false, c: g.s.clock.color, id: o.id, dash: [] };
           g.c.c.textAlign = 'center';
           g.c.c.textBaseline = 'middle';
-          g.d = { x: x, y: y, t: o.day.toString (), f: true, s: '2em', id: o.id + 'text' };
+          g.d = { x: x, y: y, t: o.day.toString (), f: true, c: g.s.clock.color, s: '2em', id: o.id + 'text' };
           o.time += Math.PI / (g.s.clock.d * 500 / g.s.tick);
           if (o.time > 1.5 * Math.PI)
           {
