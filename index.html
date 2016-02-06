@@ -407,10 +407,10 @@ var g =
         return home;
       };
       o.home = o.gethome ();
+      o.town = o.home;
 
       g.log = o.name + ' from ' + o.home.name;
 
-      o.goto = {};
       o.select = function ()
       {
         var n = g.r (0, g.s.city.n, true);
@@ -419,26 +419,53 @@ var g =
         {
           if (i == n)
           {
-            o.goto = g.city[id];
-            g.log = o.name + ' go to ' + o.goto.name;
-            break;
+            return g.city[id];
           };
           i++;
         };
       };
-      o.select ();
+      o.goto = o.select ();
 
       var oldtime = g.o.clock.time;
+      var step = 1 / g.s.clock.d;
+      var path = 0;
       o.move = function ()
       {
-        if (g.e.type == 'tick')
+        if (o.goto == undefined)
         {
-          if ( g.o.clock.time > oldtime)
+          o.goto = o.select ();
+        }
+        else
+        {
+          if (g.e.type == 'tick')
           {
-            oldtime = g.o.clock.time;
-            if (g.o.clock.time % o.speed == 0)
+            if ( g.o.clock.time > oldtime)
             {
-
+              oldtime = g.o.clock.time;
+              if (g.o.clock.time % o.speed == 0)
+              {
+                var x1 = o.town.x; var y1 = o.town.y;
+                var x2 = o.goto.x; var y2 = o.goto.y;
+                var s = Math.sqrt (Math.pow (x1 - x2, 2) + Math.pow (y1 - y2, 2));
+                g.log = s;
+                if (path < s)
+                {
+                  var l1 = path;
+                  var l2 = s - path;
+                  var l12 = l1/l2;
+                  var x = (x1 + x2 * l12) / (1 + l12); var y = (y1 + y2 * l12) / (1 + l12);
+                  x = g.c.x (x); y = g.c.y (y);
+                  g.log = l2;
+                  path += step;
+                  delete g.scene[o.id + o.name];
+                  g.d = { x: x, y: y, r: g.s.citizen.size, f: true, c: g.s.citizen.color, id: o.id + o.name };
+                }
+                else
+                {
+                  o.town = o.goto;
+                  o.goto = o.select ();
+                };
+              };
             };
           };
         };
@@ -730,12 +757,14 @@ var g =
 
     citizen:
     {
+      color: '#3FDBFF',
       gold: { min: 0, max: 10 },
       hp: { min: 1, max: 10 },
       n: 5,
       name: [ 'Дарк', 'Нульч', 'Творог', 'Ыыыыы', 'Кожемяка', 'Абу', 'Педро', 'Модер', 'Твити', 'Лесси' ],
       power: { min: 0, max: 5 },
-      speed: { min: 1, max: 10 }
+      size: 0.01,
+      speed: { min: 1, max: 2 }
     },
 
     city:
