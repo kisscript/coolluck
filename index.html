@@ -417,9 +417,9 @@ var g =
           if ( g.o.clock.time > oldtime)
           {
             oldtime = g.o.clock.time;
-            if (g.o.clock.time % o.speed)
+            if (g.o.clock.time % o.speed == 0)
             {
-
+              g.log = g.o.clock.time + ' ' + o.speed;
             };
           };
         };
@@ -427,7 +427,7 @@ var g =
 
       o.update = function ()
       {
-
+        o.move ();
       };
       g.o[o.id] = o;
     },
@@ -524,7 +524,7 @@ var g =
           var x = g.c.x (g.s.clock.x);
           var y = g.c.y (g.s.clock.y);
           var r = g.c.xymin (g.s.clock.r);
-          if ((Math.floor (g.s.time / 1000) > o.time)) { o.time = Math.floor (g.s.time / 1000); };
+          if ((Math.floor (g.s.time / 1000) > o.time)) { o.time = Math.round (g.s.time / 1000); };
           g.d = { x: x, y: y, r: r, f: true, c: g.s.clock.color, id: o.id + 'bg', dash: [] };
           g.d = { x: x, y: y, r: r - 2, a0: 1.5 * Math.PI, a1: o.angle + 0.1, s: 5, f: false, c: g.s.clock.color2, id: o.id + 'shadow', dash: [] };
           g.d = { x: x, y: y, r: r, a0: 1.5 * Math.PI, a1: o.angle, s: 5, f: false, c: g.s.clock.color, id: o.id, dash: [] };
