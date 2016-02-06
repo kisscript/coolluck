@@ -531,11 +531,23 @@ var g =
         o.r = g.r (0.03, 0.05);
       };
 
+      var tid = o.id + 'text';
+      o.out = function ()
+      {
+        delete g.scene[tid];
+      };
+
+      o.over = function ()
+      {
+        //g.c.c.textBaseline = 'top';
+        g.d = { x: o.x, y: o.y - 1.5 * o.r, t: o.name, f: true, id: tid };
+      };
+
       var x = o.x;
       var y = o.y;
       var r = o.r;
       g.b =
-      { f: true, x: x, y: y, r: r, i0: g.s.city.color.default, i1: g.s.city.color.active, id: o.id,
+      { f: true, x: x, y: y, r: r, i0: g.s.city.color.default, i1: g.s.city.color.active, id: o.id, out: o.out, over: o.over,
         a: function ()
         {
           g.log = o.id;
