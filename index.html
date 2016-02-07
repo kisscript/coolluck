@@ -372,31 +372,41 @@ var g =
       };
 
       o.nat = 0;
-      o.setnat = function (n)
+      o.setnat0 = function ()
       {
-        o.nat = n;
+        o.nat = 0;
         g.button[idm0].destroy ();
         delete g.scene[idm0];
         delete g.scene[idt0];
       };
 
+      o.setnat1 = function ()
+      {
+        o.nat = 1;
+        g.button[idm1].destroy ();
+        delete g.scene[idm1];
+        delete g.scene[idt1];
+      };
+
       var idm0 = o.id + 'm0'; var idt0 = o.id + 't0';
+      var idm1 = o.id + 'm1'; var idt1 = o.id + 't1';
       var openmenu = false;
       var inzone = false;
       o.openmenu = function ()
       {
         openmenu = true;
 
-        var over = function ()
-        {
-          g.d = { x: dx, y: dy, t: '0', f: true, c: g.s.citizen.color, id: idt0 };
-        };
-
         //set 0
         var dx = (g.c.x (o.x) + 0 * g.c.xymin (o.r)) / g.c.width;
         var dy = (g.c.y (o.y) - 2.5 * g.c.xymin (o.r)) / g.c.height;
-        g.b = { x: dx, y: dy, b: true, r: o.r, f: true, i0: g.s.camp.menu.color, i1: g.s.camp.menu.color, a: o.setnat, over: over, id: idm0 };
+        g.b = { x: dx, y: dy, b: true, r: o.r, f: true, i0: g.s.camp.menu.color, i1: g.s.camp.menu.color, a: o.setnat0, id: idm0 };
         g.d = { x: dx, y: dy, t: '0', f: true, c: g.s.citizen.color, id: idt0 };
+
+        //set 1
+        var dx = (g.c.x (o.x) + 2 * g.c.xymin (o.r)) / g.c.width;
+        var dy = (g.c.y (o.y) - 1.5 * g.c.xymin (o.r)) / g.c.height;
+        g.b = { x: dx, y: dy, b: true, r: o.r, f: true, i0: g.s.camp.menu.color, i1: g.s.camp.menu.color, a: o.setnat1, id: idm1 };
+        g.d = { x: dx, y: dy, t: '1', f: true, c: g.s.citizen.color, id: idt1 };
       };
 
       o.closemenu = function ()
@@ -407,8 +417,9 @@ var g =
           {
             openmenu = false;
             var _ = (g.button[idm0]) ? g.button[idm0].destroy () : undefined;
-            delete g.scene[idm0];
-            delete g.scene[idt0];
+            var _ = (g.button[idm1]) ? g.button[idm1].destroy () : undefined;
+            delete g.scene[idm0]; delete g.scene[idt0];
+            delete g.scene[idm1]; delete g.scene[idt1];
           };
         };
         inzone = false;
