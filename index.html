@@ -424,33 +424,17 @@ var g =
     {
       o.id = 'chest';
 
-      o.tick = function ()
+      o.click = function ()
       {
-        if (g.e.type == 'tick')
-        {
-          o.show (false);
-          o.show (true);
-        };
+        g.log = o.id;
       };
 
-      o.showed = false;
-      o.show = function (show)
-      {
-        if (show)
-        {
-          var x = g.c.x (g.s.chest.x);
-          var y = g.c.y (g.s.chest.y);
-          g.d = { x: x, y: y, i: g.i.chest };
-        }
-        else
-        {
-          delete g.scene[o.id];
-        };
-      };
+      delete g.scene[o.id];
+      g.b = { x: g.s.chest.x, y: g.s.chest.y, h: g.s.chest.h, w: g.s.chest.w, i0: g.i.chest, i1: g.i.chest1, a: o.click };
 
       o.update = function ()
       {
-        o.tick ();
+
       };
       g.o[o.id] = o;
     },
@@ -839,8 +823,10 @@ var g =
 
     chest:
     {
-      x: 0.5,
-      y: 0.5
+      h: 45,
+      w: 53,
+      x: 0.5 - 26.5 / w.innerWidth,
+      y: 0.85
     },
 
     citizen:
@@ -929,6 +915,7 @@ g.run ();
 g.i.l =
 {
   chest: 'chest.svg',
+  chest1: 'chest1.svg',
   logo: 'logo.svg',
   logo1: 'logo1.svg'
 };
@@ -946,6 +933,7 @@ g.b =
       next: function ()
       {
         g.g.clock = {};
+        g.g.chest = {};
         for (var i = 0; i < g.s.city.n; i++) { g.g.city = { id: 'city' + i }; };
         g.g.paths = {};
         for (var i = 0; i < g.s.citizen.n; i++) { g.g.citizen = {}; };
