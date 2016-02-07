@@ -7,9 +7,10 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   id="svg4292"
+   id="svg4136"
    version="1.1"
    inkscape:version="0.91 r13725"
    width="70"
@@ -17,7 +18,7 @@
    viewBox="0 0 70 60"
    sodipodi:docname="chest.svg">
   <metadata
-     id="metadata4298">
+     id="metadata4142">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -29,7 +30,7 @@
     </rdf:RDF>
   </metadata>
   <defs
-     id="defs4296" />
+     id="defs4140" />
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -39,28 +40,31 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="2560"
-     inkscape:window-height="1027"
-     id="namedview4294"
+     inkscape:window-width="1278"
+     inkscape:window-height="1018"
+     id="namedview4138"
      showgrid="false"
-     inkscape:zoom="3.9333333"
+     inkscape:zoom="14.3"
      inkscape:cx="35"
-     inkscape:cy="14.237288"
-     inkscape:window-x="-8"
-     inkscape:window-y="22"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg4292" />
-  <g
-     id="g4842">
-    <path
-       style="fill:#fefefe"
-       d="m 0,35 0,-25 5,0 5,0 0,-5 0,-5 25,0 25,0 0,5 0,5 5,0 5,0 0,25 0,25 -35,0 -35,0 0,-25 z"
-       id="path4846"
-       inkscape:connector-curvature="0" />
-    <path
-       style="fill:#8776cb"
-       d="m 0,35 0,-25 5,0 5,0 0,-5 0,-5 25,0 25,0 0,5 0,5 5,0 5,0 0,25 0,25 -35,0 -35,0 0,-25 z m 60,5 0,-10 -10,0 -10,0 0,5 0,5 -5,0 -5,0 0,-5 0,-5 -10,0 -10,0 0,10 0,10 25,0 25,0 0,-10 z m 0,-25 0,-5 -25,0 -25,0 0,5 0,5 25,0 25,0 0,-5 z"
-       id="path4844"
-       inkscape:connector-curvature="0" />
-  </g>
+     inkscape:cy="30"
+     inkscape:window-x="1273"
+     inkscape:window-y="30"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg4136" />
+  <image
+     width="70"
+     height="60"
+     preserveAspectRatio="none"
+     style="image-rendering:optimizeSpeed"
+     xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAAA8CAYAAADbl8wjAAAABGdBTUEAALGPC/xhBQAAAAlwSFlz
+AAAN1gAADdYBkG95nAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC42/Ixj3wAAAPFJREFU
+eF7t0MEJAkEQBVGjNgWDM6cd700VDCjIaC28y8DS/LqttbY87s/1C+Yug4+Ejpxo7jL4SOjIieYu
+g4+Ejpxo7jL4SOjIieYug4+Ejpxo7jL4SOjIieYug4+Ejpxo7jL4SOjIieYug4+Ejpxo7jLbg3/l
+o22kMKIwojCiMKIwojCiMKIwojBiO8y/KYwojCiMKIwojCiMKIwojCiM2A5zXddH0Q1C/76DbpDC
+iMKIwojCiMKIwojCiMKIwoivhfkW2kYKIwojCiMKIwojCiMKIwojCiO2w/ybwojCiMKIwojCiMKI
+wojCiMKg53oB2khNYQTNzgkAAAAASUVORK5CYII=
+"
+     id="image4144"
+     x="0"
+     y="0" />
 </svg>
