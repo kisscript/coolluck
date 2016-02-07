@@ -605,7 +605,6 @@ var g =
               path = 0;
               var profit = g.r (g.s.citizen.gold.min, g.s.citizen.gold.town, true);
               o.gold += (o.gold + profit <= g.s.citizen.gold.lim) ? profit : 0;
-              g.log = o.gold;
               o.town = o.goto;
               o.goto = o.select ();
             };
