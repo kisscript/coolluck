@@ -371,9 +371,40 @@ var g =
         };
       };
 
+      var idmenu = o.id + 'menu';
+      var idmenubox = o.id + 'menubox';
+      var idmenuboxb = o.id + 'menuboxb';
+      var openmenu = false;
+      var inzone = false;
+      o.openmenu = function ()
+      {
+        openmenu = true;
+        var dx = (g.c.x (o.x) + 1.5 * g.c.xymin (o.r)) / g.c.width;
+        var dy = (g.c.y (o.y) - 2 * g.c.xymin (o.r)) / g.c.height;
+        g.d = { a: o.x, b: o.y, x: dx, y: dy, dash: [], s: 2, c: g.s.camp.color, id: idmenu };
+        g.d = { x: dx, y: dy, w: 2 * o.r, s: 2, h: -4 * o.r, c: g.s.camp.color, id: idmenuboxb };
+        g.d = { x: dx, y: dy, w: 2 * o.r, h: -4 * o.r, f: true, c: g.s.camp.color, id: idmenubox };
+      };
+
+      o.closemenu = function ()
+      {
+        if ((g.e.type == 'click') && (!inzone))
+        {
+          if (openmenu)
+          {
+            openmenu = false;
+            delete g.scene[idmenu];
+            delete g.scene[idmenubox];
+            delete g.scene[idmenuboxb];
+          };
+        };
+        inzone = false;
+      };
+
       o.click = function ()
       {
-        g.log = o.scout ();
+        inzone = true;
+        o.openmenu ();
       };
 
       var movefirst = true;
@@ -416,6 +447,7 @@ var g =
       {
         o.move ();
         o.besider ();
+        o.closemenu ();
       };
       g.o[o.id] = o;
     },
