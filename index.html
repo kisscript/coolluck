@@ -355,6 +355,22 @@ var g =
         return civ;
       };
 
+      o.beside = 0;
+      o.besider = function ()
+      {
+        if (g.e.type == 'tick')
+        {
+          var beside = o.scout();
+          if (o.beside != beside)
+          {
+            o.beside = beside;
+            var id = 'campinf';
+            delete g.scene[id];
+            g.d = { x: o.x, y: o.y, t: beside, id: id, f: true, c: g.s.citizen.color };
+          };
+        };
+      };
+
       o.click = function ()
       {
         g.log = o.scout ();
@@ -399,6 +415,7 @@ var g =
       o.update = function ()
       {
         o.move ();
+        o.besider ();
       };
       g.o[o.id] = o;
     },
