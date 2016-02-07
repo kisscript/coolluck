@@ -386,7 +386,7 @@ var g =
       {
         o.move ();
       };
-      g.o[o.id] = o;
+      g.unit.civ[o.id] = o;
     },
 
     set citizen (o)
@@ -806,6 +806,11 @@ var g =
   },
 
   scene: [],
+
+  unit:
+  {
+    civ: []
+  },
 
   update: function ()
   {
