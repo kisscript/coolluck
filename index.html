@@ -382,8 +382,8 @@ var g =
         var dx = (g.c.x (o.x) + 1.5 * g.c.xymin (o.r)) / g.c.width;
         var dy = (g.c.y (o.y) - 2 * g.c.xymin (o.r)) / g.c.height;
         g.d = { a: o.x, b: o.y, x: dx, y: dy, dash: [], s: 2, c: g.s.camp.color, id: idmenu };
-        g.d = { x: dx, y: dy, w: 2 * o.r, s: 2, h: -4 * o.r, c: g.s.camp.color, id: idmenuboxb };
-        g.d = { x: dx, y: dy, w: 2 * o.r, h: -4 * o.r, f: true, c: g.s.camp.color, id: idmenubox };
+        g.d = { x: dx, y: dy, w: g.s.camp.menu.w * o.r, s: 2, h: -g.s.camp.menu.h * o.r, c: g.s.camp.color, id: idmenuboxb };
+        g.d = { x: dx, y: dy, w: g.s.camp.menu.w * o.r, h: -g.s.camp.menu.h * o.r, f: true, c: g.s.camp.color, id: idmenubox };
       };
 
       o.closemenu = function ()
@@ -847,6 +847,11 @@ var g =
     {
       color: '#87c',
       color2: '#a6c',
+      menu:
+      {
+        h: 8,
+        w: 3
+      },
       size: 0.025,
       size2: 0.05
     },
