@@ -324,11 +324,6 @@ var g =
       o.id = 'camp';
       o.moved = false;
 
-      o.manage = function ()
-      {
-        g.log = 'camp';
-      };
-
       var idrad = 'camp_zone';
       o.out = function ()
       {
@@ -340,8 +335,18 @@ var g =
         g.d = { x: o.x, y: o.y, r: o.r2, c: g.s.camp.color2, id: idrad, dash: [1, 3] };
       };
 
-      var movefirst = true;
+      o.scout = function ()
+      {
+        var civ = 0;
+        return 0;
+      };
 
+      o.click = function ()
+      {
+        g.log = o.scout ();
+      };
+
+      var movefirst = true;
       o.move = function ()
       {
         if (!o.moved)
@@ -371,7 +376,7 @@ var g =
             o.y = g.e.y / g.c.height;
             o.r = r / Math.min (g.c.height, g.c.width);
             o.r2 = r2 / Math.min (g.c.height, g.c.width);
-            g.b = { x: o.x, y: o.y, r: o.r, i0: g.s.camp.color, i1: g.s.camp.color2, id: id3, dash: [], f: true, a: o.manage, out: o.out, over: o.over };
+            g.b = { x: o.x, y: o.y, r: o.r, i0: g.s.camp.color, i1: g.s.camp.color2, id: id3, dash: [], f: true, a: o.click, out: o.out, over: o.over };
             o.moved = true;
           };
         };
@@ -547,12 +552,7 @@ var g =
       var y = o.y;
       var r = o.r;
       g.b =
-      { f: true, x: x, y: y, r: r, i0: g.s.city.color.default, i1: g.s.city.color.active, id: o.id, out: o.out, over: o.over,
-        a: function ()
-        {
-          g.log = o.id;
-        }
-      };
+      { f: true, x: x, y: y, r: r, i0: g.s.city.color.default, i1: g.s.city.color.active, id: o.id, out: o.out, over: o.over, a: o.click };
 
       o.update = function ()
       {
