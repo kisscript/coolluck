@@ -344,14 +344,53 @@ var g =
         };
         return home;
       };
-      o.home = o.gethome ();
+
+      o.full = false;
+
+      var repeats = 1;
+      o.norepeat = function ()
+      {
+        var ready = false;
+        while (!ready)
+        {
+          ready = true;
+          var candidat = o.gethome ();
+          for (var id in g.o)
+          {
+            if (g.o[id].tag == 'bandit')
+            {
+              repeats++;
+              var bandit = g.o[id].tag;
+              if (bandit.id == candidat.id)
+              {
+                ready = false;
+                break;
+              };
+            };
+          };
+
+          if (repeats > g.s.city.n )
+          {
+            g.log = repeats;
+            ready = true;
+            o.full = true;
+          };
+
+          o.home = candidat;
+        };
+      };
+
+      o.norepeat ();
 
       o.update = function ()
       {
 
       };
 
-      g.o[o.id] = o;
+      if (!o.full)
+      {
+        g.o[o.id] = o;
+      };
     },
 
     set camp (o)
@@ -774,6 +813,7 @@ var g =
           o.angle += Math.PI / (g.s.clock.d * 500 / g.s.tick);
           if (o.angle > 1.5 * Math.PI)
           {
+            g.newday ();
             o.sun = 'day';
             o.angle = -0.49 * Math.PI;
             o.day++;
@@ -921,6 +961,11 @@ var g =
     w.console.log (text);
   },
 
+  newday: function ()
+  {
+    g.g.bandit = {};
+  },
+
   o: [],
 
   path: [],
@@ -940,6 +985,10 @@ var g =
 
   s:
   {
+    bandit:
+    {
+    },
+
     camp:
     {
       color: '#87c',
@@ -984,7 +1033,7 @@ var g =
         active: '#888',
         default: '#888'
       },
-      name: [ 'Вегас', 'Кодинск', 'Фагач', 'Шкуросибирск', 'Дефолтный', 'Битардск', 'Сычов', 'Мухосранск', 'Наш Крым', 'Ерохеевка', 'Абучан', 'Нульчан', 'Сырнарния', 'Охрененск', 'Зашкваринск' ],
+      name: [ 'Вегас', 'Кодинск', 'Фагач', 'Шкуросибирск', 'Дефолтный', 'Битардск', 'Сычов', 'Мухосранск', 'Наш Крым', 'Ерохеевка', 'Абучан', 'Нульчан', 'Сырнарния', 'Задрипинск', 'Зашкваринск' ],
       path:
       {
         min: 3,
@@ -1005,7 +1054,7 @@ var g =
       color2: '#555',
       color3: '#fff',
       color4: '#ddd',
-      d: 60,
+      d: 2,
       r: 0.05,
       size: '1.5em',
       x: 0.5,
