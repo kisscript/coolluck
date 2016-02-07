@@ -323,6 +323,37 @@ var g =
 
   g:
   {
+    set bandit (o)
+    {
+      o.id = 'bandit' + Object.keys (g.o).length;
+      o.name = g.s.citizen.name[g.r (0, g.s.citizen.name.length - 1, true)];
+      o.tag = 'bandit';
+
+      o.gethome = function ()
+      {
+        var home = g.r (0, g.s.city.n - 1, true);
+        var i = 0;
+        for (var id in g.city)
+        {
+          if (i == home)
+          {
+            home = g.city[id];
+            break;
+          };
+          i++;
+        };
+        return home;
+      };
+      o.home = o.gethome ();
+
+      o.update = function ()
+      {
+
+      };
+
+      g.o[o.id] = o;
+    },
+
     set camp (o)
     {
       o.id = 'camp';
@@ -757,13 +788,13 @@ var g =
           if ((Math.floor (g.s.time / 1000) > o.time)) { o.time = Math.round (g.s.time / 1000); };
           g.d = { x: x, y: y, r: r, a0: 0.5 * Math.PI, a1: 1.5 * Math.PI, f: true, c: g.s.clock.color, id: o.id + 'bg' };
           g.d = { x: x, y: y, r: r, a0: 1.5 * Math.PI, a1: 0.5 * Math.PI, f: true, c: g.s.clock.color3, id: o.id + 'day' };
-          g.d = { x: x, y: y, r: r - 2, a0: 1.5 * Math.PI, a1: o.angle + 0.1, s: 5, f: false, c: g.s.clock.color2, id: o.id + 'shadow', dash: [2, 2] };
+          g.d = { x: x, y: y, r: r - 2, a0: 1.5 * Math.PI, a1: o.angle + 0.1, s: 5, f: false, c: g.s.clock.color2, id: o.id + 'shadow', dash: [1, 3] };
           var _ = (o.sun == 'day') ? w.d.body.style.background = g.s.clock.color4 : w.d.body.style.background = g.s.clock.color2;
-          var csun = (o.sun == 'day') ? g.s.clock.color3 : g.s.clock.color;
-          g.d = { x: x, y: y, r: r, a0: 1.5 * Math.PI, a1: o.angle, s: 5, f: false, c: csun, id: o.id, dash: [1, 1] };
+          var csun = (o.sun == 'day') ? g.s.clock.csun : g.s.clock.csun;
+          g.d = { x: x, y: y, r: r, a0: 1.5 * Math.PI, a1: o.angle, s: 5, f: false, c: csun, id: o.id, dash: [2, 2] };
           g.c.c.textAlign = 'center';
           g.c.c.textBaseline = 'middle';
-          g.d = { x: x, y: y, t: o.day.toString (), c: g.s.clock.color2, s: g.s.clock.size, dash: [], id: o.id + 'texts' };
+          g.d = { x: x, y: y, t: o.day.toString (), c: g.s.clock.color, s: g.s.clock.size, dash: [], id: o.id + 'texts' };
           g.d = { x: x, y: y, t: o.day.toString (), f: true, c: g.s.clock.color3, s: g.s.clock.size, id: o.id + 'text' };
 
         }
@@ -969,6 +1000,7 @@ var g =
 
     clock:
     {
+      csun: '#fb0',
       color: '#87c',
       color2: '#555',
       color3: '#fff',
