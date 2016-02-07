@@ -338,7 +338,21 @@ var g =
       o.scout = function ()
       {
         var civ = 0;
-        return 0;
+        for (var id in g.o)
+        {
+          if (g.o[id].type == 'citizen')
+          {
+            var citizen = g.o[id];
+            var x1 = o.x; var x2 = citizen.x;
+            var y1 = o.y; var y2 = citizen.y;
+            var s = Math.sqrt (Math.pow (x1 - x2, 2) + Math.pow (y1 - y2, 2));
+            if (s < g.s.camp.size2)
+            {
+              civ++;
+            };
+          };
+        };
+        return civ;
       };
 
       o.click = function ()
@@ -468,6 +482,7 @@ var g =
               var l2 = s - path;
               var l12 = l1/l2;
               var x = (x1 + x2 * l12) / (1 + l12); var y = (y1 + y2 * l12) / (1 + l12);
+              o.x = x; o.y = y;
               x = g.c.x (x); y = g.c.y (y);
               path += step;
               delete g.scene[o.id + o.name];
@@ -755,7 +770,7 @@ var g =
       color: '#3FDBFF',
       gold: { min: 0, max: 10 },
       hp: { min: 1, max: 10 },
-      n: 100,
+      n: 10,
       now: 0,
       name: [ 'Дарк', 'Нульч', 'Творог', 'Ыыыыы', 'Кожемяка', 'Абу', 'Педро', 'Модер', 'Твити', 'Лесси' ],
       power: { min: 0, max: 5 },
@@ -776,7 +791,7 @@ var g =
         min: 3,
         max: 20
       },
-      between: 100,
+      between: 0.2 * Math.min (w.innerHeight, w.innerWidth),
       n: 5
     },
 
