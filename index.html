@@ -386,13 +386,14 @@ var g =
       {
         o.move ();
       };
-      g.unit.civ[o.id] = o;
+      g.o[o.id] = o;
     },
 
     set citizen (o)
     {
       o.id = 'citizen' + Object.keys (g.o).length;
       o.name = g.s.citizen.name[g.r (0, g.s.citizen.name.length - 1, true)];
+      o.type = 'citizen';
 
       o.gold = g.r (g.s.citizen.gold.min, g.s.citizen.gold.max, true);
       o.hp = g.r (g.s.citizen.hp.min, g.s.citizen.hp.max, true);
@@ -806,11 +807,6 @@ var g =
   },
 
   scene: [],
-
-  unit:
-  {
-    civ: []
-  },
 
   update: function ()
   {
