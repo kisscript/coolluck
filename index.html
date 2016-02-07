@@ -420,6 +420,41 @@ var g =
       g.o[o.id] = o;
     },
 
+    set chest (o)
+    {
+      o.id = 'chest';
+
+      o.tick = function ()
+      {
+        if (g.e.type == 'tick')
+        {
+          o.show (false);
+          o.show (true);
+        };
+      };
+
+      o.showed = false;
+      o.show = function (show)
+      {
+        if (show)
+        {
+          var x = g.c.x (g.s.chest.x);
+          var y = g.c.y (g.s.chest.y);
+          g.d = { x: x, y: y, i: g.i.chest };
+        }
+        else
+        {
+          delete g.scene[o.id];
+        };
+      };
+
+      o.update = function ()
+      {
+        o.tick ();
+      };
+      g.o[o.id] = o;
+    },
+
     set citizen (o)
     {
       o.id = 'citizen' + Object.keys (g.o).length;
@@ -574,6 +609,11 @@ var g =
       o.out = function ()
       {
         delete g.scene[tid];
+      };
+
+      o.click = function ()
+      {
+        g.log = o.name;
       };
 
       o.over = function ()
@@ -797,6 +837,12 @@ var g =
       size2: 0.05
     },
 
+    chest:
+    {
+      x: 0.5,
+      y: 0.5
+    },
+
     citizen:
     {
       color: '#3FDBFF',
@@ -882,6 +928,7 @@ g.run ();
 
 g.i.l =
 {
+  chest: 'chest.svg',
   logo: 'logo.svg',
   logo1: 'logo1.svg'
 };
