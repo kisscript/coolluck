@@ -594,12 +594,18 @@ var g =
               o.x = x; o.y = y;
               x = g.c.x (x); y = g.c.y (y);
               path += step;
+
               delete g.scene[o.id + o.name];
-              g.d = { x: x, y: y, r: g.s.citizen.size, f: true, c: g.s.citizen.color, id: o.id + o.name };
+
+              var kgold = 1 +  2 * o.gold / g.s.citizen.gold.lim;
+              g.d = { x: x, y: y, r: kgold * g.s.citizen.size, f: true, c: g.s.citizen.color, id: o.id + o.name };
             }
             else
             {
               path = 0;
+              var profit = g.r (g.s.citizen.gold.min, g.s.citizen.gold.town, true);
+              o.gold += (o.gold + profit <= g.s.citizen.gold.lim) ? profit : o.gold;
+              g.log = o.gold;
               o.town = o.goto;
               o.goto = o.select ();
             };
@@ -909,7 +915,7 @@ var g =
     citizen:
     {
       color: '#fff',
-      gold: { min: 0, max: 10 },
+      gold: { min: 0, max: 10, town: 10, lim: 100 },
       hp: { min: 1, max: 10 },
       n: 10,
       now: 0,
