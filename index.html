@@ -410,14 +410,6 @@ var g =
 
       o.incamp = false;
 
-      o.menu = function ()
-      {
-        if (g.o.chest.gold >= o.price)
-        {
-          g.o.chest.gold -= o.price;
-        };
-      };
-
       o.hide = function ()
       {
         g.button[o.id].destroy ();
@@ -436,25 +428,50 @@ var g =
         g.d = { x: o.x, y: o.y, t: o.price, c: g.s.bandit.cprice, f: true, id: o.id + 'price' };
       };
 
+      o.moved = true;
       o.move = function ()
       {
-        var x1 = o.x; var y1 = o.y;
-        var x2 = g.s.bandit.x; var y2 = g.s.bandit.y;
-        var s = Math.sqrt (Math.pow (x1 - x2, 2) + Math.pow (y1 - y2, 2));
-        var l1 = g.s.bandit.speed;
-        var l2 = s - l1;
-        var l12 = l1/l2;
-        var x = (x1 + x2 * l12) / (1 + l12); var y = (y1 + y2 * l12) / (1 + l12);
-        o.x = x; o.y = y;
-        x = g.c.x (x); y = g.c.y (y);
+        if (g.e.type == 'tick')
+        {
+          if (!o.moved)
+          {
+            var x1 = o.x; var y1 = o.y;
+            var x2 = g.s.bandit.x; var y2 = g.s.bandit.y;
+            var s = Math.sqrt (Math.pow (x1 - x2, 2) + Math.pow (y1 - y2, 2));
+            var l1 = g.s.bandit.speed;
+            var l2 = s - l1;
+            var l12 = l1/l2;
+            var x = (x1 + x2 * l12) / (1 + l12); var y = (y1 + y2 * l12) / (1 + l12);
+            o.x = x; o.y = y;
+            x = g.c.x (x); y = g.c.y (y);
 
-        o.hide ();
-        o.show ();
+            o.moved = (o.y > g.s.bandit.y) ? true : false;
+            o.hide ();
+            o.show ();
+          };
+        };
+      };
+
+      o.buy = false;
+      o.menu = function ()
+      {
+        if (!o.buy)
+        {
+          if (g.o.chest.gold >= o.price)
+          {
+            g.o.chest.gold -= o.price;
+            o.buy = true;
+            o.moved = false;
+            o.home = g.o.camp;
+            g.s.bandit.now++;
+            g.log = g.s.bandit.now;
+          };
+        };
       };
 
       o.update = function ()
       {
-
+        if (o.buy) o.move ();
       };
 
       if (!o.full)
@@ -1105,7 +1122,7 @@ var g =
       speed: 0.02,
       now: 0,
       x: 0.56,
-      y: 0.9
+      y: 0.9 + 22.5 / w.innerHeight
     },
 
     camp:
