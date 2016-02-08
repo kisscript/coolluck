@@ -329,6 +329,9 @@ var g =
       o.name = g.s.citizen.name[g.r (0, g.s.citizen.name.length - 1, true)];
       o.tag = 'bandit';
 
+      o.hp = g.r (g.s.bandit.hp.min, g.s.bandit.hp.max, true);
+      o.power = g.r (g.s.bandit.power.min, g.s.bandit.power.max, true);
+
       o.gethome = function ()
       {
         var home = g.r (0, g.s.city.n - 1, true);
@@ -360,8 +363,8 @@ var g =
             if (g.o[id].tag == 'bandit')
             {
               repeats++;
-              var bandit = g.o[id].tag;
-              if (bandit.id == candidat.id)
+              var bandit = g.o[id];
+              if (bandit.home.id == candidat.id)
               {
                 ready = false;
                 break;
@@ -396,11 +399,13 @@ var g =
       o.hide = function ()
       {
         g.button[o.id].destroy ();
+        delete g.scene[o.id + 'name'];
       };
 
       o.show = function ()
       {
         g.b = { x: o.x, y: o.y, r: o.r, f: true,  i0: o.c, i1: o.c, a: o.menu, id: o.id };
+        g.d = { x: o.x, y: o.y - 2 * o.r, t: o.name, c: o.c, f: true, id: o.id + 'name' };
       };
 
       o.update = function ()
@@ -410,6 +415,7 @@ var g =
 
       if (!o.full)
       {
+        g.log = o.id + ' ' + o.home.id;
         g.o[o.id] = o;
       };
     },
@@ -1033,7 +1039,9 @@ var g =
     bandit:
     {
       color: '#f76',
-      max: 5,
+      hp: { min: 1, max: 5 },
+      max: 3,
+      power: { min: 1, max: 5},
       size: 0.02
     },
 
@@ -1102,7 +1110,7 @@ var g =
       color2: '#555',
       color3: '#fff',
       color4: '#ddd',
-      d: 60,
+      d: 10,
       r: 0.05,
       size: '1.5em',
       x: 0.5,
