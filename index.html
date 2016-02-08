@@ -696,7 +696,7 @@ var g =
 
             i++;
             bandit.x = (g.c.width / 2 + i * g.c.width / g.s.bandit.max / 3) / g.c.width;
-            bandit.y = g.s.bandit.y;
+            bandit.y = g.s.bandit.y - i * bandit.r;
             bandit.show ();
           };
         };
@@ -1142,6 +1142,11 @@ var g =
     var r = (max) ? Math.random () * (max - min) + min : Math.random () * min;
         r = (floor) ? Math.floor (Math.random() * (max - min + 1)) + min : r;
     return r;
+  },
+
+  raid: function ()
+  {
+
   },
 
   run: function ()
