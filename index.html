@@ -381,10 +381,10 @@ var g =
           {
             if (g.o[id].tag == 'bandit')
             {
-              repeats++;
               var bandit = g.o[id];
               if (bandit.home.id == candidat.id)
               {
+                repeats++;
                 ready = false;
                 break;
               };
@@ -1187,12 +1187,12 @@ var g =
 
     clock:
     {
-      csun: '#fb0',
+      csun: '#fff',
       color: '#87c',
       color2: '#555',
       color3: '#fff',
       color4: '#ddd',
-      d: 1,
+      d: 10,
       r: 0.05,
       size: '1.5em',
       x: 0.5,
