@@ -7,7 +7,7 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    body { background: #ddd; }
+    body { background: #888; }
     canvas { left: 0; position: absolute; top: 0; }
   </style>
   <title>Coolluck</title>
@@ -371,7 +371,6 @@ var g =
 
           if (repeats > g.s.city.n )
           {
-            g.log = repeats;
             ready = true;
             o.full = true;
           };
@@ -381,6 +380,14 @@ var g =
       };
 
       o.norepeat ();
+
+      o.incamp = false;
+
+      o.show = function ()
+      {
+        delete g.scene[o.id];
+        
+      };
 
       o.update = function ()
       {
@@ -1054,7 +1061,7 @@ var g =
       color2: '#555',
       color3: '#fff',
       color4: '#ddd',
-      d: 2,
+      d: 60,
       r: 0.05,
       size: '1.5em',
       x: 0.5,
