@@ -283,7 +283,7 @@ var g =
           g.c.c.font = (c.s) ? c.s + ' ' + g.s.font.family : g.s.font.size + ' ' + g.s.font.family;
           var _ = (c.f) ? g.c.c.fillText (c.t, x, y) : g.c.c.strokeText (c.t, x, y) ;
           break;
-      }
+      };
     };
   },
 
@@ -683,9 +683,32 @@ var g =
 
       o.gold = g.s.chest.gold;
 
+      o.showband = function ()
+      {
+        for (var id in g.o)
+        {
+          var bandit = g.o[id];
+          if ((bandit.tag == 'bandit') && (bandit.home.id == 'camp'))
+          {
+            for (var i = 0; i < g.s.bandit.max; i++)
+            {
+
+            };
+          };
+        };
+      };
+
+      o.clicked = false;
       o.click = function ()
       {
-        g.log = o.id;
+        if (o.clicked)
+        {
+          o.clicked = false;
+        }
+        else
+        {
+          o.clicked = true;
+        };
       };
 
       o.over = function ()
@@ -1017,9 +1040,9 @@ var g =
             {
               if (g.e.type == 'tick')
               {
-                delete g.scene[o.id];
-                if (o.offset < 8) { o.offset += 0.02; } else { o.offset = 0; };
-                g.d = { a: a, b: b, x: x, y: y, c: '#888', dash: [4, 4], offset: o.offset, id: o.id };
+                //delete g.scene[o.id];
+                //if (o.offset < 8) { o.offset += 0.01; } else { o.offset = 0; };
+                //g.d = { a: a, b: b, x: x, y: y, c: '#888', dash: [4, 4], offset: o.offset, id: o.id };
               }
             };
 
