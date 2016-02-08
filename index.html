@@ -381,12 +381,27 @@ var g =
 
       o.norepeat ();
 
+      o.x = g.city[o.home.id].x;
+      o.y = g.city[o.home.id].y - 2 * g.city[o.home.id].r;
+      o.r = g.s.bandit.size;
+      o.c = g.s.bandit.color;
+
       o.incamp = false;
+
+      o.menu = function ()
+      {
+        g.log = 'bandit menu';
+      };
+
+      o.hide = function ()
+      {
+        g.log = o.id;
+        g.button[o.id].destroy ();
+      };
 
       o.show = function ()
       {
-        delete g.scene[o.id];
-        
+        g.b = { x: o.x, y: o.y, r: o.r, f: true,  i0: o.c, i1: o.c, a: o.menu, id: o.id };
       };
 
       o.update = function ()
@@ -770,8 +785,33 @@ var g =
         delete g.scene[tid];
       };
 
+      o.banditshow = false;
+      o.band = undefined;
+      o.showbandit = function ()
+      {
+        for (var id in g.o)
+        {
+          var bandit = g.o[id];
+          if ((bandit.tag == 'bandit') && (bandit.home.id == o.id))
+          {
+            if (o.banditshow)
+            {
+              o.banditshow = false;
+              o.band.hide ();
+            }
+            else
+            {
+              o.banditshow = true;
+              o.band = bandit;
+              bandit.show ();
+            };
+          };
+        };
+      };
+
       o.click = function ()
       {
+        o.showbandit ();
         g.log = o.name;
       };
 
@@ -994,6 +1034,9 @@ var g =
   {
     bandit:
     {
+      color: '#f76',
+      max: 5,
+      size: 0.02
     },
 
     camp:
@@ -1130,6 +1173,7 @@ g.b =
         g.g.paths = {};
         for (var i = 0; i < g.s.citizen.n; i++) { g.g.citizen = {}; };
         g.g.camp = {};
+        for (var i = 0; i < g.s.bandit.max; i++) { g.g.bandit = {}; }
       }
     };
     g.button['logo'].destroy ();
