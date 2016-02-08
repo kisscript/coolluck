@@ -457,18 +457,21 @@ var g =
       {
         if (!o.buy)
         {
-          if (g.o.chest.gold >= o.price)
+          if (g.s.bandit.now < g.s.bandit.max)
           {
-            g.o.chest.gold -= o.price;
-            o.buy = true;
-            o.moved = false;
+            if (g.o.chest.gold >= o.price)
+            {
+              g.o.chest.gold -= o.price;
+              o.buy = true;
+              o.moved = false;
 
-            g.city[o.home.id].banditshow = false;
-            g.city[o.home.id].band = undefined;
+              g.city[o.home.id].banditshow = false;
+              g.city[o.home.id].band = undefined;
 
-            o.home = g.o.camp;
-            g.s.bandit.now++;
-            g.log = g.s.bandit.now;
+              o.home = g.o.camp;
+              g.s.bandit.now++;
+              g.log = g.s.bandit.now;
+            };
           };
         };
       };
