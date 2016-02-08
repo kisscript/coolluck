@@ -39,6 +39,30 @@ var g =
 
   animate: [],
 
+  attack: function (a, d)
+  {
+    if ((a != undefined) && (d != undefined))
+    {
+      for (var i = 0; i < a.length; i++)
+      {
+        var enemy = g.r (d);
+        enemy.hp -= g.r (0, a[i].power);
+        if (enemy.hp <= 0)
+        {
+          if (enemy.tag == 'bandit')
+          {
+            enemy.death ();
+          };
+          if (enemy.gold > 0)
+          {
+            g.o.chest.gold += enemy.gold;
+            enemy.gold = 0;
+          };
+        };
+      };
+    };
+  },
+
   set b (b)
   {
     var x = g.c.x (b.x);
@@ -337,13 +361,13 @@ var g =
     g.run ();
   },
 
-  fight: function (a, b)
+  fight: function (a, d)
   {
     var end = false;
     while (!end)
     {
-      var attack = g.r (a);
-      g.log = attack.id;
+      g.attack (a, d);
+      g.attack (d, a);
       end = true;
     };
   },
@@ -360,6 +384,7 @@ var g =
       o.ghp = o.hp / g.s.bandit.hp.max;
       o.power = g.r (g.s.bandit.power.min, g.s.bandit.power.max, true);
       o.gpower = o.power / g.s.bandit.power.max;
+      o.gold = 0;
       o.price = o.hp + o.power + g.r (g.s.bandit.price.min, g.s.bandit.price.max, true);
 
       o.gethome = function ()
@@ -423,7 +448,7 @@ var g =
 
       o.hide = function ()
       {
-        g.button[o.id].destroy ();
+        if (g.button[o.id]) g.button[o.id].destroy ();
         delete g.scene[o.id + 'name'];
         delete g.scene[o.id + 'price'];
         delete g.scene[o.id + 'power'];
@@ -490,6 +515,14 @@ var g =
             };
           };
         };
+      };
+
+      o.death = function ()
+      {
+        g.s.bandit.now--;
+        o.hide ();
+        delete g.o[o.id];
+        delete g.o.chest.band[o.id];
       };
 
       o.update = function ()
@@ -1174,8 +1207,8 @@ var g =
     var r;
     if (typeof (min) == 'object')
     {
-      r = Math.floor (Math.random() * min.length);
-      r = r[r];
+      var id = Math.floor (Math.random() * min.length);
+      r = min[id];
     }
     else
     {
@@ -1187,14 +1220,17 @@ var g =
 
   raid: function (enemy)
   {
-    var band = [];
-    for (var id in g.o.chest.band)
+    if (Object.keys (g.o.chest.band).length > 0)
     {
-      band[band.length] = g.o.chest.band[id];
+      var band = [];
+      for (var id in g.o.chest.band)
+      {
+        band[band.length] = g.o.chest.band[id];
+      };
+      g.fight (band, enemy);
+    } else {
+      g.log = 'no';
     };
-    g.log = band;
-    g.log = g.r (band);
-    //g.fight (band, enemy);
   },
 
   run: function ()
@@ -1211,9 +1247,9 @@ var g =
       cprice: '#87c',
       chp: '#fff',
       cpower: '#87c',
-      hp: { min: 1, max: 5 },
+      hp: { min: 1, max: 10 },
       max: 3,
-      power: { min: 1, max: 5 },
+      power: { min: 1, max: 10 },
       price: { min: 0, max: 5 },
       size: 0.03,
       speed: 0.02,
@@ -1251,7 +1287,7 @@ var g =
     citizen:
     {
       color: '#fff',
-      gold: { min: 0, max: 10, town: 10, lim: 100 },
+      gold: { min: 1, max: 3, town: 3, lim: 100 },
       hp: { min: 1, max: 10 },
       n: 10,
       now: 0,
