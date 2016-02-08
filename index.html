@@ -337,6 +337,17 @@ var g =
     g.run ();
   },
 
+  fight: function (a, b)
+  {
+    var end = false;
+    while (!end)
+    {
+      var attack = g.r (a);
+      g.log = attack.id;
+      end = true;
+    };
+  },
+
   g:
   {
     set bandit (o)
@@ -449,6 +460,11 @@ var g =
             o.hide ();
             o.show ();
             o.moved = (s < 0.5 * g.o.camp.r) ? o.hide () : false;
+            if (s < 0.5 * g.o.camp.r)
+            {
+              g.o.chest.clicked = true;
+              g.o.chest.showband ();
+            };
           };
         };
       };
@@ -478,7 +494,10 @@ var g =
 
       o.update = function ()
       {
-        if (o.buy) o.move ();
+        if (o.buy)
+        {
+          o.move ();
+        };
       };
 
       if (!o.full)
@@ -503,14 +522,18 @@ var g =
         g.d = { x: o.x, y: o.y, r: o.r2, c: g.s.camp.color2, id: idrad, dash: [1, 3] };
       };
 
+      o.enemy = [];
+
       o.scout = function ()
       {
+        o.enemy = [];
         var civ = 0;
         for (var id in g.o)
         {
           if (g.o[id].type == 'citizen')
           {
             var citizen = g.o[id];
+            o.enemy[o.enemy.length] = citizen;
             var x1 = o.x; var x2 = citizen.x;
             var y1 = o.y; var y2 = citizen.y;
             var s = Math.sqrt (Math.pow (x1 - x2, 2) + Math.pow (y1 - y2, 2));
@@ -524,6 +547,15 @@ var g =
       };
 
       o.beside = 0;
+      o.nat = 0;
+      o.raid = function (enemy)
+      {
+        if ((o.beside <= o.nat) && (o.beside > 0))
+        {
+          g.raid (enemy);
+        };
+      };
+
       o.besider = function ()
       {
         if (g.e.type == 'tick')
@@ -532,6 +564,7 @@ var g =
           if (o.beside != beside)
           {
             o.beside = beside;
+            o.raid (o.enemy);
             var id = 'campinf';
             delete g.scene[id];
             g.d = { x: o.x, y: o.y, t: beside, id: id, f: true, c: g.s.citizen.color };
@@ -545,7 +578,6 @@ var g =
         g.b = { x: o.x, y: o.y, r: o.r, i0: c, i1: c, id: 'camp', dash: [], f: true, a: o.click, out: o.out, over: o.over };
       };
 
-      o.nat = 0;
       o.setnat0 = function ()
       {
         o.nat = 0;
@@ -1139,14 +1171,30 @@ var g =
 
   r: function (min, max, floor)
   {
-    var r = (max) ? Math.random () * (max - min) + min : Math.random () * min;
-        r = (floor) ? Math.floor (Math.random() * (max - min + 1)) + min : r;
+    var r;
+    if (typeof (min) == 'object')
+    {
+      r = Math.floor (Math.random() * min.length);
+      r = r[r];
+    }
+    else
+    {
+      r = (max) ? Math.random () * (max - min) + min : Math.random () * min;
+      r = (floor) ? Math.floor (Math.random() * (max - min + 1)) + min : r;
+    };
     return r;
   },
 
-  raid: function ()
+  raid: function (enemy)
   {
-
+    var band = [];
+    for (var id in g.o.chest.band)
+    {
+      band[band.length] = g.o.chest.band[id];
+    };
+    g.log = band;
+    g.log = g.r (band);
+    //g.fight (band, enemy);
   },
 
   run: function ()
