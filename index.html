@@ -330,7 +330,10 @@ var g =
       o.tag = 'bandit';
 
       o.hp = g.r (g.s.bandit.hp.min, g.s.bandit.hp.max, true);
+      o.ghp = o.hp / g.s.bandit.hp.max;
       o.power = g.r (g.s.bandit.power.min, g.s.bandit.power.max, true);
+      o.gpower = o.power / g.s.bandit.power.max;
+      o.price = o.hp + o.power + g.r (g.s.bandit.price.min, g.s.bandit.price.max, true);
 
       o.gethome = function ()
       {
@@ -393,19 +396,25 @@ var g =
 
       o.menu = function ()
       {
-        g.log = 'bandit menu';
+        g.log = o.hp;
       };
 
       o.hide = function ()
       {
         g.button[o.id].destroy ();
         delete g.scene[o.id + 'name'];
+        delete g.scene[o.id + 'price'];
+        delete g.scene[o.id + 'power'];
+        delete g.scene[o.id + 'hp'];
       };
 
       o.show = function ()
       {
-        g.b = { x: o.x, y: o.y, r: o.r, f: true,  i0: o.c, i1: o.c, a: o.menu, id: o.id };
-        g.d = { x: o.x, y: o.y - 2 * o.r, t: o.name, c: o.c, f: true, id: o.id + 'name' };
+        g.b = { x: o.x, y: o.y, r: o.r, b: true, f: true,  i0: o.c, i1: o.c, a: o.menu, id: o.id };
+        g.d = { x: o.x, y: o.y, r: o.r, s: 3, a0: 2 * Math.PI - 0.5 * Math.PI * o.ghp, a1: 0.5 * Math.PI * o.ghp, c: g.s.bandit.chp, dash: [], id: o.id + 'hp' };
+        g.d = { x: o.x, y: o.y, r: o.r, s: 3, a0: Math.PI - 0.5 * Math.PI * o.gpower, a1: Math.PI + 0.5 * Math.PI * o.gpower, c: g.s.bandit.cpower, dash: [], id: o.id + 'power' };
+        g.d = { x: o.x, y: o.y - 2 * o.r, t: o.name, c: g.s.bandit.cprice, f: true, id: o.id + 'name' };
+        g.d = { x: o.x, y: o.y, t: o.price, c: g.s.bandit.cprice, f: true, id: o.id + 'price' };
       };
 
       o.update = function ()
@@ -415,7 +424,6 @@ var g =
 
       if (!o.full)
       {
-        g.log = o.id + ' ' + o.home.id;
         g.o[o.id] = o;
       };
     },
@@ -1038,11 +1046,15 @@ var g =
   {
     bandit:
     {
-      color: '#f76',
+      color: 'rgba(0,0,0,0)',
+      cprice: '#87c',
+      chp: '#8c7',
+      cpower: '#c77',
       hp: { min: 1, max: 5 },
       max: 3,
-      power: { min: 1, max: 5},
-      size: 0.02
+      power: { min: 1, max: 5 },
+      price: { min: 0, max: 5 },
+      size: 0.03
     },
 
     camp:
