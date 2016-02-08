@@ -222,6 +222,22 @@ var g =
   {
     g.c.c.clearRect (0, 0, g.c.width, g.c.height);
 
+    /*z sort
+    for (var i = 0; i < Object.keys (g.scene).length - 1; i++)
+    {
+      g.scene.z = (g.scene.z) ? g.scene.z : 0;
+      for (var j = 0; j < Object.keys (g.scene).length - 1 - i; j++)
+      {
+        if (g.scene[j] > g.scene[j + 1])
+        {
+          var b = g.scene[j];
+          g.scene[j] = g.scene[j + 1];
+          g.scene[j + 1] = b;
+        };
+      };
+    };
+    */
+
     for (var id in g.scene)
     {
       var c = g.scene[id];
