@@ -412,7 +412,10 @@ var g =
 
       o.menu = function ()
       {
-        g.log = o.hp;
+        if (g.o.chest.gold >= o.price)
+        {
+          g.log = 'buy';
+        };
       };
 
       o.hide = function ()
@@ -638,13 +641,25 @@ var g =
     {
       o.id = 'chest';
 
+      o.gold = g.s.chest.gold;
+
       o.click = function ()
       {
         g.log = o.id;
       };
 
+      o.over = function ()
+      {
+        g.d = { x: g.s.chest.x + g.s.chest.w / g.c.width / 2, y: g.s.chest.y - g.s.chest.h / g.c.height / 3, s: '1.5em', t: o.gold, f: true, c: g.s.chest.color, id: o.id + 'gold' };
+      };
+
+      o.out = function ()
+      {
+        delete g.scene[o.id + 'gold'];
+      };
+
       delete g.scene[o.id];
-      g.b = { x: g.s.chest.x, y: g.s.chest.y, h: g.s.chest.h, w: g.s.chest.w, i0: g.i.chest, i1: g.i.chest1, a: o.click };
+      g.b = { x: g.s.chest.x, y: g.s.chest.y, h: g.s.chest.h, w: g.s.chest.w, i0: g.i.chest, i1: g.i.chest1, a: o.click, out: o.out, over: o.over };
 
       o.update = function ()
       {
@@ -1055,7 +1070,7 @@ var g =
   run: function ()
   {
     g.update ();
-    g.draw ();
+    if (g.e.type != 'mousemove') g.draw ();
   },
 
   s:
@@ -1091,6 +1106,8 @@ var g =
 
     chest:
     {
+      color: '#87c',
+      gold: 10,
       h: 45,
       w: 53,
       x: 0.5 - 26.5 / w.innerWidth,
@@ -1104,7 +1121,7 @@ var g =
       hp: { min: 1, max: 10 },
       n: 10,
       now: 0,
-      name: [ 'Дарк', 'Нульч', 'Творог', 'Ыыыыы', 'Кожемяка', 'Абу', 'Педро', 'Модер', 'Твити', 'Лесси' ],
+      name: [ 'Дарк', 'Нульч', 'Творог', 'Ыыыыы', 'Кожемяка', 'Абу', 'Педро', 'Модер', 'Твити', 'Лесси', 'Фримен', 'Довакин', 'Путин', 'Ельцин', 'Порошенко', 'Янукович', 'Якубович', 'Петросян', 'Кирилл', 'Терминатор', 'Арагорн', 'Гендальф', 'Боромир', 'Леголас', 'Гимли', 'Бильбо', 'Фродо' ],
       power: { min: 0, max: 5 },
       size: 0.01,
       speed: { min: 1, max: 10 }
@@ -1138,7 +1155,7 @@ var g =
       color2: '#555',
       color3: '#fff',
       color4: '#ddd',
-      d: 10,
+      d: 60,
       r: 0.05,
       size: '1.5em',
       x: 0.5,
