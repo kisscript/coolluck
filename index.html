@@ -462,6 +462,10 @@ var g =
             g.o.chest.gold -= o.price;
             o.buy = true;
             o.moved = false;
+
+            g.city[o.home.id].banditshow = false;
+            g.city[o.home.id].band = undefined;
+
             o.home = g.o.camp;
             g.s.bandit.now++;
             g.log = g.s.bandit.now;
