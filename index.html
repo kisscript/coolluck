@@ -414,7 +414,7 @@ var g =
       {
         if (g.o.chest.gold >= o.price)
         {
-          g.log = 'buy';
+          g.o.chest.gold -= o.price;
         };
       };
 
