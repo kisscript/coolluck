@@ -381,9 +381,7 @@ var g =
       o.tag = 'bandit';
 
       o.hp = g.r (g.s.bandit.hp.min, g.s.bandit.hp.max, true);
-      o.ghp = o.hp / g.s.bandit.hp.max;
       o.power = g.r (g.s.bandit.power.min, g.s.bandit.power.max, true);
-      o.gpower = o.power / g.s.bandit.power.max;
       o.gold = 0;
       o.price = o.hp + o.power + g.r (g.s.bandit.price.min, g.s.bandit.price.max, true);
 
@@ -458,6 +456,8 @@ var g =
 
       o.show = function ()
       {
+        o.ghp = o.hp / g.s.bandit.hp.max;
+        o.gpower = o.power / g.s.bandit.power.max;
         g.b = { x: o.x, y: o.y, r: o.r, b: true, f: true,  i0: o.c, i1: o.c, a: o.menu, id: o.id };
         g.d = { x: o.x, y: o.y, r: o.r, s: 3, a0: 2 * Math.PI - 0.5 * Math.PI * o.ghp, a1: 0.5 * Math.PI * o.ghp, c: g.s.bandit.chp, dash: [], id: o.id + 'hp' };
         g.d = { x: o.x, y: o.y, r: o.r, s: 3, a0: Math.PI - 0.5 * Math.PI * o.gpower, a1: Math.PI + 0.5 * Math.PI * o.gpower, c: g.s.bandit.cpower, dash: [], id: o.id + 'power' };
@@ -585,6 +585,12 @@ var g =
       {
         if ((o.beside <= o.nat) && (o.beside > 0))
         {
+          for (var id in g.o.chest.band)
+          {
+            var bandit = g.o.chest.band[id];
+            bandit.hide ();
+            bandit.show ();
+          };
           g.raid (enemy);
         };
       };
@@ -1225,7 +1231,8 @@ var g =
       var band = [];
       for (var id in g.o.chest.band)
       {
-        band[band.length] = g.o.chest.band[id];
+        var bandit = g.o.chest.band[id];
+        band[band.length] = bandit;
       };
       g.fight (band, enemy);
     } else {
@@ -1277,7 +1284,7 @@ var g =
     chest:
     {
       color: '#87c',
-      gold: 100,
+      gold: 50,
       h: 45,
       w: 53,
       x: 0.5 - 26.5 / w.innerWidth,
@@ -1288,7 +1295,7 @@ var g =
     {
       color: '#fff',
       gold: { min: 1, max: 3, town: 3, lim: 100 },
-      hp: { min: 1, max: 10 },
+      hp: { min: 1, max: 5 },
       n: 10,
       now: 0,
       name: [ 'Дарк', 'Нульч', 'Творог', 'Ыыыыы', 'Кожемяка', 'Абу', 'Педро', 'Модер', 'Твити', 'Лесси', 'Фримен', 'Довакин', 'Путин', 'Ельцин', 'Порошенко', 'Янукович', 'Якубович', 'Петросян', 'Кирилл', 'Терминатор', 'Арагорн', 'Гендальф', 'Боромир', 'Леголас', 'Гимли', 'Бильбо', 'Фродо' ],
