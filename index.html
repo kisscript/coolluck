@@ -683,18 +683,30 @@ var g =
 
       o.gold = g.s.chest.gold;
 
+      o.band = {};
       o.showband = function ()
       {
+        var i = 0;
         for (var id in g.o)
         {
           var bandit = g.o[id];
           if ((bandit.tag == 'bandit') && (bandit.home.id == 'camp'))
           {
-            for (var i = 0; i < g.s.bandit.max; i++)
-            {
+            o.band[bandit.id] = bandit;
 
-            };
+            i++;
+            bandit.x = (g.c.width / 2 + i * g.c.width / g.s.bandit.max / 4) / g.c.width;
+            bandit.y = g.s.bandit.y;
+            bandit.show ();
           };
+        };
+      };
+
+      o.hideband = function ()
+      {
+        for (var id in o.band)
+        {
+          o.band[id].hide ();
         };
       };
 
@@ -703,10 +715,12 @@ var g =
       {
         if (o.clicked)
         {
+          o.hideband ();
           o.clicked = false;
         }
         else
         {
+          o.showband ();
           o.clicked = true;
         };
       };
