@@ -63,6 +63,8 @@ var g =
           if (enemy[i].gold > 0)
           {
             g.o.chest.gold += enemy[i].gold;
+            g.o.chest.out ();
+            g.o.chest.over ();
             enemy[i].gold = 0;
           };
         };
@@ -552,6 +554,11 @@ var g =
       o.id = 'camp';
       o.moved = false;
 
+      o.hp = g.s.camp.hp;
+      o.fhp = g.s.camp.hp;
+      o.power = g.s.camp.power;
+      o.lastchance =  false;
+
       var idrad = 'camp_zone';
       o.out = function ()
       {
@@ -652,6 +659,14 @@ var g =
         o.recolor (g.s.camp.menu.call);
       };
 
+      o.setls = function ()
+      {
+        o.lastchance = true;
+        g.button[o.id + 'ls'].destroy ();
+        delete g.scene[o.id + 'ls'];
+        delete g.scene[o.id + 'lst'];
+      };
+
       var idm0 = o.id + 'm0'; var idt0 = o.id + 't0';
       var idm1 = o.id + 'm1'; var idt1 = o.id + 't1';
       var idma = o.id + 'ma'; var idta = o.id + 'ta';
@@ -678,6 +693,12 @@ var g =
         dy = (g.c.y (o.y) + 0.7 * g.c.xymin (o.r)) / g.c.height;
         g.b = { x: dx, y: dy, b: true, r: 0.9 * o.r, f: true, i0: g.s.camp.menu.call, i1: g.s.camp.menu.call, a: o.setnall, id: idma };
         g.d = { x: dx, y: dy, t: '∞', f: true, c: g.s.citizen.color, id: idta };
+
+        //set last
+        dx = (g.c.x (o.x) - 2 * g.c.xymin (o.r)) / g.c.width;
+        dy = (g.c.y (o.y) + 1.5 * g.c.xymin (o.r)) / g.c.height;
+        g.b = { x: dx, y: dy, b: true, r: 0.6 * o.r, f: true, i0: g.s.camp.menu.last, i1: g.s.camp.menu.last, a: o.setls, id: o.id + 'ls' };
+        g.d = { x: dx, y: dy, t: '♣', f: true, c: g.s.citizen.color, id: o.id + 'lst' };
       };
 
       o.closemenu = function ()
@@ -690,9 +711,11 @@ var g =
             var _ = (g.button[idm0]) ? g.button[idm0].destroy () : undefined;
             var _ = (g.button[idm1]) ? g.button[idm1].destroy () : undefined;
             var _ = (g.button[idma]) ? g.button[idma].destroy () : undefined;
+            var _ = (g.button[o.id + 'ls']) ? g.button[o.id + 'ls'].destroy () : undefined;
             delete g.scene[idm0]; delete g.scene[idt0];
             delete g.scene[idm1]; delete g.scene[idt1];
             delete g.scene[idma]; delete g.scene[idta];
+            delete g.scene[o.id + 'ls']; delete g.scene[o.id + 'lst'];
           };
         };
         inzone = false;
@@ -1278,14 +1301,17 @@ var g =
     {
       color: '#87c',
       color2: '#a6c',
+      hp: 100,
       menu:
       {
         c0: '#8c7',
         c1: '#fb0',
         call: '#c77',
+        last: '#555',
         h: 8,
         w: 3
       },
+      power: 1,
       size: 0.05,
       size2: 0.1
     },
