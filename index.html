@@ -1111,8 +1111,7 @@ var g =
       var x = o.x;
       var y = o.y;
       var r = o.r;
-      g.b =
-      { f: true, x: x-r, y: y-r, h: 2*r, w: 2*r, i0: g.i.town, i1: g.i.town, id: o.id, out: o.out, over: o.over, a: o.click };
+      g.b = { f: true, x: x, y: y, r:r, i0: g.s.city.color.active, i1: g.s.city.color.active, id: o.id, out: o.out, over: o.over, a: o.click };
 
       o.update = function ()
       {
@@ -1422,7 +1421,7 @@ var g =
       color: '#fff',
       gold: { min: 1, max: 3, town: 3, lim: 100 },
       hp: { min: 1, max: 5 },
-      n: 10,
+      n: 15,
       now: 0,
       name: [ 'Дарк', 'Нульч', 'Творог', 'Ыыыыы', 'Кожемяка', 'Абу', 'Педро', 'Модер', 'Твити', 'Лесси', 'Фримен', 'Довакин', 'Путин', 'Ельцин', 'Порошенко', 'Янукович', 'Якубович', 'Петросян', 'Кирилл', 'Терминатор', 'Арагорн', 'Гендальф', 'Боромир', 'Леголас', 'Гимли', 'Бильбо', 'Фродо' ],
       power: { min: 0, max: 5 },
@@ -1443,7 +1442,7 @@ var g =
         min: 3,
         max: 20
       },
-      rmin: 0.03,
+      rmin: 80/Math.min (w.innerHeight, w.innerWidth),
       rmax: 0.05,
       between: 0.1 * Math.min (w.innerHeight, w.innerWidth),
       n: 5,
