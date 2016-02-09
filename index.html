@@ -1188,6 +1188,20 @@ var g =
       g.o[o.id] = o;
     },
 
+    set guard (o)
+    {
+      o.tag = 'guard';
+      o.id = o.tag + Object.keys (g.o).length;
+      o.hp = g.r (g.s.guard.hp.min, g.s.guard.hp.max, true);
+      o.power = g.r (g.s.guard.power.min, g.s.guard.power.max, true);
+
+      o.update = function ()
+      {
+
+      };
+      g.o[o.id] = o;
+    },
+
     set paths (o)
     {
       var i = 0;
@@ -1452,6 +1466,12 @@ var g =
     {
       family: 'Arial',
       size: '1em'
+    },
+
+    guard:
+    {
+      hp: { min: 5, max: 10 },
+      power: { min: 5, max: 10 }
     },
 
     path:
