@@ -618,11 +618,17 @@ var g =
           }
           else
           {
-            for (var id in g.o.chest.band)
+            if (g.o.chest.band.length > 0)
             {
-              var bandit = g.o.chest.band[id];
-              bandit.hide ();
-              bandit.show ();
+              for (var id in g.o.chest.band)
+              {
+                var bandit = g.o.chest.band[id];
+                if (bandit.tag == 'bandit')
+                {
+                  bandit.hide ();
+                  bandit.show ();
+                };
+              };
             };
           };
           if (o.nat == 1)
@@ -695,12 +701,18 @@ var g =
 
       o.setls = function ()
       {
-        o.hp -= 10;
-        o.lastchance = true;
-        g.button[o.id + 'ls'].destroy ();
+        if (!o.lastchance)
+        {
+          o.lastchance = true;
+          g.button[o.id + 'ls'].destroy ();
+          o.showhp ();
+        }
+        else
+        {
+          o.lastchance = false;
+        };
         delete g.scene[o.id + 'ls'];
         delete g.scene[o.id + 'lst'];
-        o.showhp ();
       };
 
       var idm0 = o.id + 'm0'; var idt0 = o.id + 't0';
