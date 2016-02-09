@@ -57,7 +57,7 @@ var g =
 
         if (a[i].tag == 'camp')
         {
-          g.log = a[i].hp;
+          //g.log = a[i].hp;
         };
 
         if (enemy[i].hp <= 0)
@@ -823,14 +823,23 @@ var g =
         };
       };
 
+      var gg = false;
       o.update = function ()
       {
         o.move ();
         o.besider ();
         o.closemenu ();
-        if (o.hpold != o.hp) o.showhp ();
+        if (o.hpold != o.hp)
+        {
+          o.showhp ();
+          if (o.hp <= 0)
+          {
+            gg = true;
+            g.gameover ();
+          };
+        };
       };
-      g.o[o.id] = o;
+      if (!gg) g.o[o.id] = o;
     },
 
     set chest (o)
@@ -1226,6 +1235,13 @@ var g =
         };
       };
     }
+  },
+
+  gameover: function ()
+  {
+    g.o = undefined;
+    //g.scene = undefined;
+    g.d = { x: 0.5, y: 0.5, t: 'GAME OVER', s: '5em', f: true, c: '#87c', id: 'gg' };
   },
 
   i:
