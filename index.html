@@ -55,6 +55,11 @@ var g =
           enemy[i].show ();
         };
 
+        if (a[i].tag == 'camp')
+        {
+          g.log = a[i].hp;
+        };
+
         if (enemy[i].hp <= 0)
         {
           end++;
@@ -564,6 +569,7 @@ var g =
       o.fhp = g.s.camp.hp;
       o.power = g.s.camp.power;
       o.lastchance =  false;
+      o.tag = 'camp';
 
       var idrad = 'camp_zone';
       o.out = function ()
@@ -606,11 +612,18 @@ var g =
       {
         if ((o.beside <= o.nat) && (o.beside > 0))
         {
-          for (var id in g.o.chest.band)
+          if (o.lastchance)
           {
-            var bandit = g.o.chest.band[id];
-            bandit.hide ();
-            bandit.show ();
+            g.o.chest.band = [ o ];
+          }
+          else
+          {
+            for (var id in g.o.chest.band)
+            {
+              var bandit = g.o.chest.band[id];
+              bandit.hide ();
+              bandit.show ();
+            };
           };
           if (o.nat == 1)
           {
@@ -669,25 +682,25 @@ var g =
         o.recolor (g.s.camp.menu.call);
       };
 
-      o.setls = function ()
-      {
-        o.lastchance = true;
-        g.button[o.id + 'ls'].destroy ();
-        delete g.scene[o.id + 'ls'];
-        delete g.scene[o.id + 'lst'];
-      };
-
       o.hpold = o.hp;
       o.showhp = function ()
       {
         if (o.lastchance)
         {
-          if (o.hp != o.hpold)
-          {
-            delete g.scene[o.id + 'hp'];
-            g.d = { x: o.x, y: o.y, r: o.r, a0: 0, a1: 2 * Math.PI, dash: [], id: o.id + 'hp' };
-          };
+          var grad = o.hp / o.fhp;
+          delete g.scene[o.id + 'hp'];
+          g.d = { x: o.x, y: o.y, r: o.r, a0: -0.5 * Math.PI, a1: 2 * Math.PI * grad - 0.5 * Math.PI, s: 3, c: g.s.camp.chp, id: o.id + 'hp', dash: [] };
         };
+      };
+
+      o.setls = function ()
+      {
+        o.hp -= 10;
+        o.lastchance = true;
+        g.button[o.id + 'ls'].destroy ();
+        delete g.scene[o.id + 'ls'];
+        delete g.scene[o.id + 'lst'];
+        o.showhp ();
       };
 
       var idm0 = o.id + 'm0'; var idt0 = o.id + 't0';
@@ -798,6 +811,7 @@ var g =
         o.move ();
         o.besider ();
         o.closemenu ();
+        if (o.hpold != o.hp) o.showhp ();
       };
       g.o[o.id] = o;
     },
@@ -1285,7 +1299,10 @@ var g =
       var band = [];
       for (var id in g.o.chest.band)
       {
-        g.o.chest.band[id].hp = g.o.chest.band[id].fhp;
+        if (g.o.chest.band[id].tag != 'camp')
+        {
+          g.o.chest.band[id].hp = g.o.chest.band[id].fhp;
+        };
         var bandit = g.o.chest.band[id];
         band[band.length] = bandit;
       };
@@ -1324,6 +1341,7 @@ var g =
     {
       color: '#87c',
       color2: '#a6c',
+      chp: '#fff',
       hp: 100,
       menu:
       {
