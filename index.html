@@ -43,20 +43,27 @@ var g =
   {
     if ((a != undefined) && (d != undefined))
     {
+      var enemy = [];
       for (var i = 0; i < a.length; i++)
       {
-        var enemy = g.r (d);
-        enemy.hp -= g.r (0, a[i].power);
-        if (enemy.hp <= 0)
+        enemy [i] = g.r (d);
+        enemy[i].hp -= g.r (0, a[i].power, true);
+        if (enemy[i].tag == 'bandit')
         {
-          if (enemy.tag == 'bandit')
+          enemy[i].hide ();
+          enemy[i].show ();
+        };
+
+        if (enemy[i].hp <= 0)
+        {
+          if (enemy[i].tag == 'bandit')
           {
-            enemy.death ();
+            enemy[i].death ();
           };
-          if (enemy.gold > 0)
+          if (enemy[i].gold > 0)
           {
-            g.o.chest.gold += enemy.gold;
-            enemy.gold = 0;
+            g.o.chest.gold += enemy[i].gold;
+            enemy[i].gold = 0;
           };
         };
       };
@@ -381,6 +388,7 @@ var g =
       o.tag = 'bandit';
 
       o.hp = g.r (g.s.bandit.hp.min, g.s.bandit.hp.max, true);
+      o.fhp = o.hp;
       o.power = g.r (g.s.bandit.power.min, g.s.bandit.power.max, true);
       o.gold = 0;
       o.price = o.hp + o.power + g.r (g.s.bandit.price.min, g.s.bandit.price.max, true);
@@ -1231,12 +1239,13 @@ var g =
       var band = [];
       for (var id in g.o.chest.band)
       {
+        g.o.chest.band[id].hp = g.o.chest.band[id].fhp;
         var bandit = g.o.chest.band[id];
         band[band.length] = bandit;
       };
       g.fight (band, enemy);
     } else {
-      g.log = 'no';
+      //g.log = 'no';
     };
   },
 
