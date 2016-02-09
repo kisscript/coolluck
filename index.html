@@ -667,6 +667,19 @@ var g =
         delete g.scene[o.id + 'lst'];
       };
 
+      o.hpold = o.hp;
+      o.showhp = function ()
+      {
+        if (o.lastchance)
+        {
+          if (o.hp != o.hpold)
+          {
+            delete g.scene[o.id + 'hp'];
+            g.d = { x: o.x, y: o.y, r: o.r, a0: 0, a1: 2 * Math.PI, dash: [], id: o.id + 'hp' };
+          };
+        };
+      };
+
       var idm0 = o.id + 'm0'; var idt0 = o.id + 't0';
       var idm1 = o.id + 'm1'; var idt1 = o.id + 't1';
       var idma = o.id + 'ma'; var idta = o.id + 'ta';
@@ -1307,7 +1320,7 @@ var g =
         c0: '#8c7',
         c1: '#fb0',
         call: '#c77',
-        last: '#555',
+        last: '#87c',
         h: 8,
         w: 3
       },
