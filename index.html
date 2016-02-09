@@ -743,10 +743,13 @@ var g =
         g.d = { x: dx, y: dy, t: '∞', f: true, c: g.s.citizen.color, id: idta };
 
         //set last
-        dx = (g.c.x (o.x) - 2 * g.c.xymin (o.r)) / g.c.width;
-        dy = (g.c.y (o.y) + 1.5 * g.c.xymin (o.r)) / g.c.height;
-        g.b = { x: dx, y: dy, b: true, r: 0.6 * o.r, f: true, i0: g.s.camp.menu.last, i1: g.s.camp.menu.last, a: o.setls, id: o.id + 'ls' };
-        g.d = { x: dx, y: dy, t: '♣', f: true, c: g.s.citizen.color, id: o.id + 'lst' };
+        if (!o.lastchance)
+        {
+          dx = (g.c.x (o.x) - 2 * g.c.xymin (o.r)) / g.c.width;
+          dy = (g.c.y (o.y) + 1.5 * g.c.xymin (o.r)) / g.c.height;
+          g.b = { x: dx, y: dy, b: true, r: 0.6 * o.r, f: true, i0: g.s.camp.menu.last, i1: g.s.camp.menu.last, a: o.setls, id: o.id + 'ls' };
+          g.d = { x: dx, y: dy, t: '♣', f: true, c: g.s.citizen.color, id: o.id + 'lst' };
+        };
       };
 
       o.closemenu = function ()
@@ -812,7 +815,7 @@ var g =
             o.y = g.e.y / g.c.height;
             o.r = r / Math.min (g.c.height, g.c.width);
             o.r2 = r2 / Math.min (g.c.height, g.c.width);
-            g.b = { x: o.x, y: o.y, r: o.r, i0: g.s.camp.color, i1: g.s.camp.color2, id: id3, dash: [], f: true, a: o.click, out: o.out, over: o.over };
+            g.b = { x: o.x, y: o.y, r: o.r, i0: g.s.camp.color, i1: g.s.camp.color, id: id3, dash: [], f: true, a: o.click, out: o.out, over: o.over };
             o.moved = true;
           };
         };
@@ -1352,7 +1355,7 @@ var g =
     camp:
     {
       color: '#87c',
-      color2: '#a6c',
+      color2: '#888',
       chp: '#fff',
       hp: 100,
       menu:
