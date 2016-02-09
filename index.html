@@ -185,6 +185,7 @@ var g =
         {
           c.height = w.innerHeight;
           c.width = w.innerWidth;
+          g.c.c.textAlign = 'center';
         };
 
         c.c = c.getContext ('2d');
@@ -320,6 +321,7 @@ var g =
           break;
 
         case 'text':
+          //g.c.c.textAlign = 'center';
           g.c.c.font = (c.s) ? c.s + ' ' + g.s.font.family : g.s.font.size + ' ' + g.s.font.family;
           var _ = (c.f) ? g.c.c.fillText (c.t, x, y) : g.c.c.strokeText (c.t, x, y) ;
           break;
@@ -1477,6 +1479,9 @@ g.i.l =
 var x = (g.c.width/2 - 59/2) / g.c.width;
 var y = (g.c.height/2 - 72/2) / g.c.height;
 
+g.c.c.textAlign = 'center';
+g.d = { x: 0.5, y: 0.5 + 72/g.c.height, t: 'Coolluck', s: '2em', f: true, c: '#888', id: 'coolluck' };
+
 g.b =
 { x: x, y: y, h: 72, w: 59, i0: g.i.logo, i1: g.i.logo1, id: 'logo',
   a: function ()
@@ -1496,6 +1501,7 @@ g.b =
       }
     };
     g.button['logo'].destroy ();
+    delete g.scene['coolluck'];
   }
 };
 
