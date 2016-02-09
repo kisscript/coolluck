@@ -41,6 +41,7 @@ var g =
 
   attack: function (a, d)
   {
+    var end = 0;
     if ((a != undefined) && (d != undefined))
     {
       var enemy = [];
@@ -56,6 +57,7 @@ var g =
 
         if (enemy[i].hp <= 0)
         {
+          end++;
           if (enemy[i].tag == 'bandit')
           {
             enemy[i].death ();
@@ -373,11 +375,15 @@ var g =
   fight: function (a, d)
   {
     var end = false;
+    var i = 0;
     while (!end)
     {
-      g.attack (a, d);
-      g.attack (d, a);
-      end = true;
+      i += g.attack (a, d);
+      i += g.attack (d, a);
+      if (i != 0)
+      {
+        end = true;
+      }
     };
   },
 
@@ -605,6 +611,10 @@ var g =
             var bandit = g.o.chest.band[id];
             bandit.hide ();
             bandit.show ();
+          };
+          if (o.nat == 1)
+          {
+            enemy = [ enemy[0] ];
           };
           g.raid (enemy);
         };
