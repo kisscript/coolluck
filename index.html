@@ -1111,8 +1111,7 @@ var g =
       var x = o.x;
       var y = o.y;
       var r = o.r;
-      var h = g.c.xymin (2 * r);
-      g.b = { f: true, x: x-0.5*r, y: y-0.5*r,i0: g.i.town, i1: g.i.town, id: o.id, out: o.out, over: o.over, a: o.click };
+      g.b = { f: true, x: x, y: y, r:r, i0: g.s.city.color.active, i1: g.s.city.color.active, id: o.id, out: o.out, over: o.over, a: o.click };
 
       o.update = function ()
       {
