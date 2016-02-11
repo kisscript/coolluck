@@ -1500,7 +1500,7 @@ var g =
       ini: false
     },
 
-    tick: 50,
+    tick: 25,
     time: 0
   },
 
@@ -1551,6 +1551,7 @@ g.b =
     g.effect.circle = { x: x, y: y, c: '#bbb',
       next: function ()
       {
+        g.s.tick = 50;
         g.g.clock = {};
         g.g.chest = {};
         for (var i = 0; i < g.s.city.n; i++) { g.g.city = { id: 'city' + i }; };
