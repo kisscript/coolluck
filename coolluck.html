@@ -1,0 +1,115 @@
+<!DOCTYPE html><html>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <style>
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    body { background: #888; margin: 0;}
+    canvas { left: 0; position: absolute; top: 0; z-index: -1;}
+  </style>
+  <title>Coolluck</title>
+<head>
+
+</head><body>
+<script>
+
+var w = window;
+var d = w.document;
+
+var g =
+{
+  c: function ()
+  {
+    var c = w.d.createElement ('canvas');
+        c.a = function ()
+        {
+          c.height = w.innerHeight;
+          c.width = w.innerWidth;
+          g.c.c.textAlign = 'center';
+        };
+
+        c.c = c.getContext ('2d');
+
+        c.inbox = function (x, y, w, h)
+        {
+          return ((g.e.x >= x) && (g.e.x <= x + w) && (g.e.y >= y) && (g.e.y <= y + h));
+        };
+
+        c.inring = function (x, y, r)
+        {
+          var l = Math.sqrt (Math.pow (g.e.x - x, 2) + Math.pow (g.e.y - y, 2));
+          return (l <= r);
+        };
+
+        c.update = function ()
+        {
+          switch (g.e.type) {
+            case 'resize':
+              c.a ();
+              break;
+          }
+        };
+
+        c.x = function (x)
+        {
+          var x = (x <= 1) ? x * g.c.width : x;
+          return x;
+        };
+
+        c.xymin = function (xy)
+        {
+          var xy = (xy <= 1) ? xy * Math.min (g.c.height, g.c.width) : xy;
+          return xy;
+        };
+
+        c.y = function (y)
+        {
+          var y = (y <= 1) ? y * g.c.height : y;
+          return y;
+        };
+
+        delete g['c'];
+
+        g.c = c;
+        c.a ();
+        w.d.body.appendChild (g.c);
+  },
+
+  cache: [],
+  calls: [],
+
+  draw: function ()
+  {
+    g.cache = g.calls;
+  },
+
+  e:
+
+  g:
+  {
+
+  },
+
+  o:
+  {
+
+  },
+
+  run: function ()
+  {
+
+  },
+
+  update: function ()
+  {
+
+  },
+};
+
+g.load ();
+g.run ();
+
+</script></body></html>
