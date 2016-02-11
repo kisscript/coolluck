@@ -235,6 +235,8 @@ var g =
         w.d.body.appendChild (g.c);
   },
 
+  cache: [],
+
   city: [],
 
   set d (c)
@@ -327,6 +329,8 @@ var g =
           break;
       };
     };
+
+    g.cache = g.scene;
   },
 
   e: {},
@@ -1496,7 +1500,7 @@ var g =
       ini: false
     },
 
-    tick: 25,
+    tick: 50,
     time: 0
   },
 
